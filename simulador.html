@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investimentos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css.css">
+  
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <div class="header">
+    <div class="cabecalho">
+      <h1 class="titulo">[S]³</h1>
+      <ul class="navbar">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="simulador.html">Simulador</a></li>
+      </ul>
+      </div>
+      
+  </div>
+        <div class="calculadora">
+          <p>Investimento Inicial: </p>
+          <input type="" id="ipt_investimento"><br>
+          <p>Aporte Mensal: </p><br>
+          <input type="number" id="ipt_aporte">
+          <p>Periodos</p><br>
+          <input type="number" id="ipt_periodo">
+          <p>Taxa de Juros</p>
+          <input type="number" id="ipt_taxa">
+          <button onclick="calcular()">Calcular</button>
+         
+    <div id="div_resultado"></div>
+</div>
+</body>
+</html>
+<script>
+function calcular() {
+    var investimentoInicial = Number(ipt_investimento.value);
+    var aporteMensal = Number(ipt_aporte.value);
+    var periodos = Number(ipt_periodo.value);
+    var taxa = Number(ipt_taxa.value) / 100; 
+
+    
+    var valorFuturo = investimentoInicial * (1 + taxa) ** periodos;
+
+    for (var i = 1; i <= periodos; i++) {
+        valorFuturo += aporteMensal * (1 + taxa) ** (periodos - i);
+    }
+
+    var totalInvestido = investimentoInicial + (aporteMensal * periodos);
+    var jurosRecebidos = valorFuturo - totalInvestido;
+
+ 
+    div_resultado.innerHTML += `Valor Futuro: R$${valorFuturo.toFixed(2)}<br>`;
+    div_resultado.innerHTML += `Total Investido: R$${totalInvestido.toFixed(2)}<br>`;
+    div_resultado.innerHTML += `Juros Recebidos: R$${jurosRecebidos.toFixed(2)}`;
+}
+</script>

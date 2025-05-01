@@ -1,0 +1,180 @@
+* {
+    font-family: "Barlow", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #3533cd;
+    color: #f5f5f5;
+    line-height: 1.6;
+}
+
+.cabecalho {
+    width: 90%;
+    max-width: 1200px;
+    /* margin: auto;
+    padding: 20px;
+    height:50%; */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho */
+.header {
+    background-image: url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 220px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 4px solid #ffcc00;
+}
+.titulo {
+    font-size: 6rem;
+    color: white;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.cabecalho .navbar {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #ffcc00;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+.navbar a:hover {
+    background-color: #ffcc00;
+    color: #222;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 60px 20px;
+}
+
+main.home-layout {
+    flex-direction: column;
+    justify-content: space-between;
+}
+.foto{
+    align-items: center;
+}
+.texto {
+    max-width: 700px;
+    width: 100%;
+    text-align: justify;
+    background-color: #3a3a3a;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+.cal
+
+.texto p {
+    font-size: 1.2rem;
+    line-height: 1.9;
+    margin-bottom: 20px;
+    color: #ffcc00;
+}
+.cadastro-box {
+    background-color: #ffffff;
+    color: #222;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    max-width: 520px;
+    width: 100%;
+}
+
+.cadastro-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #0d0d0d;
+    text-align: center;
+}
+
+.cadastro-box label {
+    display: block;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.cadastro-box input,
+.cadastro-box select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: 0.2s ease;
+}
+
+.cadastro-box input:focus,
+.cadastro-box select:focus {
+    border-color: #ffcc00;
+    outline: none;
+    box-shadow: 0 0 6px rgba(255, 204, 0, 0.4);
+}
+
+.cadastro-box button {
+    background-color: #0d0d0d;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+    width: 100%;
+    margin-top: 30px;
+}
+.Renda{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.box1{
+        background-color: #ffffff;
+        color: #222;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+        max-width: 520px;
+        width: 100%;
+        display: flex;
+}
+.box2{
+    background-color: #ffffff;
+    color: #222;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    max-width: 520px;
+
+}
+
+.calculadora{
+    
+}
