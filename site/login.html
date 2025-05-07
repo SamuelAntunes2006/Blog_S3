@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Investimentos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css.css">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | S³ Investimentos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
-
-  <!-- Cabeçalho -->
-  <div class="header">
-    <div class="cabecalho">
+  <header class="header2">
+    <div class="cabecalho cadastro-header">
       <h1 class="titulo">[S]³</h1>
-      <ul class="navbar">
-        <li><a href="cadastro.html">Cadastrar</a></li>
-      </ul>
+      <nav class="navbar">
+        <ul>
+          <li><a href="cadastro.html">Cadastro</a></li>
+        </ul>
+      </nav>
     </div>
-  </div>
+    <div class="tituloheader">
+      <h2>Login e comece a investir!</h2>
+    </div>
+  </header>
 
-  <main>
+  <main class="cadastro-container">
     <div class="cadastro-box">
       <h2>Faça seu Login:</h2>
 
@@ -30,11 +32,15 @@
       <label for="ipt_senha">Senha:</label>
       <input type="password" id="ipt_senha" placeholder="Digite sua senha" />
 
-      <a href="home.html">
+      <a href="simulador.html">
         <button>Login</button>
-    </a>
-    
+      </a>
     </div>
   </main>
+
+  <footer>
+    <p>&copy; 2025 [S]³ Investimentos. Todos os direitos reservados.</p>
+    <p><a href="sobre.html">samuel.asantos2006@sptech.school</a></p>
+  </footer>
 </body>
 </html>

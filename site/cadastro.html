@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investimens</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro | S³ Investimentos</title>
+  <link rel="stylesheet" href="estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/css.css">
 </head>
 <body>
-    <header class="header">
-        <div class="cabecalho">
-            <h1 class="titulo">[S]³</h1>
-                <ul class="navbar">
-                <li><a href="login.html">Login</a></li>
-                </ul>
-        </div>
-    </header>
-    <main class="home-layout">
-        <section class="texto">
-            <p>✨ Pronto para dar um passo rumo à sua <strong>liberdade financeira</strong>?<br>
-            👉 Vamos transformar seu futuro financeiro juntos!</p>
-        </section>
+  <!-- Header específico da página de cadastro -->
+  <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="tituloheader">
+      <h2>Cadastre-se e comece a investir!</h2>
+    </div>
+  </header>
 
-        <section class="cadastro-box">
-            <h2>✍️ Cadastro Rápido</h2>
+  <!-- Formulário de Cadastro -->
+  <main class="cadastro-container">
+    <form class="cadastro-box">
+      <h2>Formulário de Cadastro</h2>
+      
+      <label for="nome">Nome completo:</label>
+      <input type="text" id="nome" name="nome" required />
 
-            <label for="ipt_nome">Nome completo:</label>
-            <input type="text" id="ipt_nome" placeholder="Digite seu nome" required>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required />
 
-            <label for="ipt_email">E-mail:</label>
-            <input type="email" id="ipt_email" placeholder="Digite seu e-mail" required>
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required />
 
-            <label for="ipt_senha">Crie uma senha:</label>
-            <input type="password" id="ipt_senha" placeholder="Crie sua senha" required>
+      <label for="idade">Idade:</label>
+      <input type="number" id="idade" name="idade" required />
 
-            <label for="ipt_Corretasenha">Confirme a senha:</label>
-            <input type="password" id="ipt_Corretasenha" placeholder="Confirme sua senha" required>
+      <label for="perfil">Perfil de investidor:</label>
+      <select id="perfil" name="perfil" required>
+        <option value="">Selecione...</option>
+        <option value="conservador">Conservador</option>
+        <option value="moderado">Moderado</option>
+        <option value="arrojado">Arrojado</option>
+      </select>
 
-            <label for="ipt_conhecimento">Nível de conhecimento em investimentos:</label>
-            <select id="ipt_conhecimento" required>
-                <option value="" disabled selected>Selecione uma opção</option>
-                <option value="Nenhum, estou começando agora">Nenhum, estou começando agora</option>
-                <option value="Básico">Básico</option>
-                <option value="Intermediário">Intermediário</option>
-                <option value="Avançado">Avançado</option>
-            </select>
-            <label for="ipt_objetivo">Objetivo financeiro atual:</label>
-            <input type="text" id="ipt_objetivo" placeholder="Ex: montar reserva, comprar casa, aposentadoria..." required>
-            <a href="home.html">
-                <button>Cadastrar</button>
-            </a>
-        </section>
-    </main>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2025 [S]³ Investimentos. Todos os direitos reservados.</p>
+    <p><a href="sobre.html">Sobre o projeto</a></p>
+  </footer>
+
 </body>
 </html>
