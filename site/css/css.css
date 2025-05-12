@@ -6,8 +6,8 @@
 }
 
 body {
-  background: linear-gradient(to bottom, #0c0c47, #1c1c6d);
-  color: #f5f5f5;
+  background:#121212;
+  color: white;
   line-height: 1.6;
   padding-bottom: 60px;
 }
@@ -23,7 +23,7 @@ body {
 }
 
 .header {
-  height: 400px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -100,6 +100,7 @@ body {
   border-radius: 8px;
   text-decoration: none;
   transition: 0.3s;
+  
 }
 
 .btn-cta:hover {
@@ -129,6 +130,20 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   max-width: 500px;
   width: 100%;
+}
+
+.Quiz{
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+} 
+.Quiz-Box{
+   background: #fff;
+  color: #222;
+  padding: 40px;
+  border-radius: 20px;
+  border-radius: 20px;
+  max-width: 500px;
 }
 
 .cadastro-box h2 {
@@ -186,27 +201,18 @@ body {
   padding: 40px 20px;
 }
 
-.intro, .conteudo, .tipos, .Ensino {
+/* Sessões com cores diferentes */
+.intro {
   margin-bottom: 50px;
+  padding: 30px;
+  border-radius: 15px;
 }
 
-.foto {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.foto img {
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.destaque {
-  font-weight: bold;
-  color: #ffcc00;
-  text-align: center;
-  margin-top: 20px;
+.conteudo {
+  margin-bottom: 50px;
+  background-color: #0d3b66;
+  padding: 30px;
+  border-radius: 15px;
 }
 
 .Renda {
@@ -215,6 +221,9 @@ body {
   gap: 20px;
   margin-bottom: 40px;
   justify-content: center;
+  background-color: #1c1c1c;
+  padding: 30px;
+  border-radius: 15px;
 }
 
 .box2 {
@@ -226,11 +235,18 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
+.tipos {
+  margin-bottom: 50px;
+  background-color:grey;
+  padding: 30px;
+  border-radius: 15px;
+}
+
 .tipos p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #222;
+  background-color: black;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 15px;
@@ -263,11 +279,12 @@ body {
 .investidores {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
-  background: black;
-  padding: 40px 20px;
+  background: gray;
   gap: 20px;
   border-radius: 15px;
+  width: 100%;
+  padding: 30px 0;
+  flex-wrap: wrap;
 }
 
 .investidor {
@@ -300,13 +317,21 @@ body {
   line-height: 1.4;
 }
 
+.destaque {
+  font-weight: bold;
+  color:white;
+  text-align: center;
+  margin-top: 20px;
+
+}
+
 .dica {
-  background: #0c0c47;
+
   padding: 20px;
   margin-top: 30px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  
 }
 
 .dica img {
@@ -319,6 +344,7 @@ body {
 .sobreBlog, .sobreMim {
   margin: auto;
   width: 75%;
+  align-items:center;
   padding: 40px 30px;
   background: white;
   font-family: 'Segoe UI', Arial, sans-serif;
@@ -348,9 +374,62 @@ body {
   margin-top: 15px;
 }
 
+.foto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.foto img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-items: center;
+}
+
+
 .sobreBlog li {
   margin-bottom: 10px;
   list-style-type: disc;
+  align-items: center;
+}
+/* Estilos para o Quiz */
+.questao {
+  margin-bottom: 20px;
+}
+
+.questao label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.questao input {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #0d0d0d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.texto_quiz{
+  text-align: center; 
+  margin-bottom: 20px; 
+  font-size: 1.1rem; 
+  color: #ddd;
+}
+
+button:hover {
+  background-color: #ffcc00;
 }
 
 footer {

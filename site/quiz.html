@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador de Investimentos</title>
+  <link rel="stylesheet" href="/css/css.css">
+</head>
+<body>
+   <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/simulador.html">Simulador</a></li>
+          <li><a href="/index.html">Home</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="tituloheader">
+      <h2>Vamos fazer um Quiz!</h2>
+    </div>
+  </header>
+  <br><br>
+  <div class="texto_quiz">
+<h3>
+  Responda ao quiz e descubra o quanto você sabe sobre investimentos!
+</h3>
+  </div>
+
+  <main class="Quiz">
+    <div class="Quiz-Box">
+      <h2>Quiz</h2>
+      <br>
+      <form id="quiz-form">
+        <div class="questao">
+          <label>1. O que é investir?</label><br>
+          <input type="radio" name="q1" value="a"> A. Gastar dinheiro sem preocupação de retorno.<br>
+          <input type="radio" name="q1" value="b"> B. Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo.<br>
+          <input type="radio" name="q1" value="c"> C. Guardar dinheiro sem gerar retorno.<br><br>
+        </div>
+
+        <div class="questao">
+          <label>2. O que é Tesouro Direto?</label><br>
+          <input type="radio" name="q2" value="a"> A. Um investimento em imóveis<br>
+          <input type="radio" name="q2" value="b"> B. Um título do governo<br>
+          <input type="radio" name="q2" value="c"> C. Uma ação de empresa privada<br><br>
+        </div>
+
+        <div class="questao">
+          <label>3. O que é CDB?</label><br>
+          <input type="radio" name="q3" value="a"> A. Um título do governo<br>
+          <input type="radio" name="q3" value="b"> B. Um investimento em ações<br>
+          <input type="radio" name="q3" value="c"> C. Um título bancário<br><br>
+        </div>
+
+        <div class="questao">
+          <label>4. O que significa "rentabilidade" em investimentos?</label><br>
+          <input type="radio" name="q4" value="a"> A. Previsibilidade de retorno.<br>
+          <input type="radio" name="q4" value="b"> B. Rendimento fixo com baixo risco.<br>
+          <input type="radio" name="q4" value="c"> C. Ganhos ou perdas dependem do desempenho do mercado.<br><br>
+        </div>
+
+        <div class="questao">
+          <label>5. Como o blog sugere que o investidor escolha o melhor investimento?</label><br>
+          <input type="radio" name="q5" value="a"> A. De acordo com suas metas e tolerância ao risco<br>
+          <input type="radio" name="q5" value="b"> B. Somente considerando o retorno financeiro.<br>
+          <input type="radio" name="q5" value="c"> C. De acordo com suas metas e tolerância ao risco.<br><br>
+        </div>
+
+        <button type="submit" class="btn">Enviar Respostas</button>
+      </form>
+
+      <div id="resultado"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
+    <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
+  </footer>
+  <script>
+
+  document.getElementById('quiz-form').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    verificarRespostas();
+  });
+
+  function verificarRespostas() {
+    let score = 0;
+    const form = document.forms['quiz-form'];
+
+    if (form.q1.value === 'b') score++;
+    if (form.q2.value === 'b') score++;
+    if (form.q3.value === 'c') score++;
+    if (form.q4.value === 'c') score++;
+    if (form.q5.value === 'a') score++;
+
+    if (score === 5) {
+      resultado.innerHTML = "<h3>Parabéns! Você acertou todas as perguntas!</h3>";
+    } else {
+      resultado.innerHTML = `<h3>Você acertou ${score} de 5. Tente melhorar na próxima!</h3>`;
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
