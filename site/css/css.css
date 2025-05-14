@@ -6,7 +6,7 @@
 }
 
 body {
-  background:#121212;
+  background: #003366;
   color: white;
   line-height: 1.6;
   padding-bottom: 60px;
@@ -132,18 +132,48 @@ body {
   width: 100%;
 }
 
-.Quiz{
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-} 
-.Quiz-Box{
-   background: #fff;
-  color: #222;
-  padding: 40px;
-  border-radius: 20px;
-  border-radius: 20px;
-  max-width: 500px;
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+.border-primary {
+    border: 3px solid var(--primary-brand-color);
+}
+
+.border-secondary {
+    border: 3px solid var(--secondary-brand-color);
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-success-with-bg {
+    color: var(--success-dark);
+    background-color: var(--success-light);
+}
+
+.text-warning-with-bg {
+    color: var(--warning-dark);
+    background-color: var(--warning-light);
+}
+
+.text-danger-with-bg {
+    color: var(--danger-dark);
+    background-color: var(--danger-light);
+}
+
+.text-new-gray {
+    color: var(--new-gray);
 }
 
 .cadastro-box h2 {
