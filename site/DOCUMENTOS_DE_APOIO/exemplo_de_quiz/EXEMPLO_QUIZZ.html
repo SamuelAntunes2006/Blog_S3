@@ -21,7 +21,8 @@
       <h2>Vamos fazer um Quiz!</h2>
     </div>
   </header>
-  
+
+
 <body onload="onloadEsconder()">
     <div id="pontuacaoEJogo">
         <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
@@ -67,10 +68,6 @@
                     <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
                     <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
                 </span>
-                <span>
-                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
-                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
-                </span>
             </div>
 
             <div id="botoes" class="flex-colunar padding-8">
@@ -89,7 +86,7 @@
     const listaDeQuestoes = [
 
        {
-            pergunta: " O que é investir??",
+            pergunta: " O que é investir?",
             alternativaA: "Gastar dinheiro sem preocupação de retorno",
             alternativaB: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo",
             alternativaC: "Guardar dinheiro sem gerar retorno",
@@ -105,7 +102,7 @@
         },
 
         {
-            pergunta: " O que é CDB?",
+            pergunta: "O que é CDB?",
             alternativaA: "Um título do governo",
             alternativaB: "Um investimento em ações",
             alternativaC: "Um título bancário",

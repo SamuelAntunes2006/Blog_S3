@@ -1,0 +1,583 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Barlow', sans-serif;
+}
+
+body {
+  background: #003366;
+  color: white;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+.header, .header2 {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                    url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border-bottom: 5px solid #ffcc00;
+  padding: 30px;
+}
+
+.header {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header2 {
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.tituloheader h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  margin-top: 20px;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navbar a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.welcome-message {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  max-width: 400px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  text-align: right;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  color: white;
+}
+
+.btn-cta {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+  
+}
+
+.btn-cta:hover {
+  background-color: #ffb300;
+}
+
+.cadastro-header, .sobreBlog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.cadastro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: calc(100vh - 310px);
+}
+
+.cadastro-box {
+  background: #fff;
+  color: #222;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+.border-primary {
+    border: 3px solid var(--primary-brand-color);
+}
+
+.border-secondary {
+    border: 3px solid var(--secondary-brand-color);
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-success-with-bg {
+    color: var(--success-dark);
+    background-color: var(--success-light);
+}
+
+.text-warning-with-bg {
+    color: var(--warning-dark);
+    background-color: var(--warning-light);
+}
+
+.text-danger-with-bg {
+    color: var(--danger-dark);
+    background-color: var(--danger-light);
+}
+
+.text-new-gray {
+    color: var(--new-gray);
+}
+
+.cadastro-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #0d0d0d;
+}
+
+.cadastro-box label {
+  display: block;
+  margin-top: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.cadastro-box input, .cadastro-box select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+.cadastro-box input:focus, .cadastro-box select:focus {
+  border-color: #ffcc00;
+  outline: none;
+  box-shadow: 0 0 6px rgba(255, 204, 0, 0.4);
+}
+
+.cadastro-box button {
+  background-color: #0d0d0d;
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s ease, transform 0.2s;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.cadastro-box button:hover {
+  background-color: #222;
+  transform: scale(1.02);
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* Sessões com cores diferentes */
+.intro {
+  margin-bottom: 50px;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.conteudo {
+  margin-bottom: 50px;
+  background-color: #0d3b66;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.Renda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+  justify-content: center;
+  background-color: #1c1c1c;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.box2 {
+  background-color: #003366;
+  padding: 30px;
+  border-radius: 20px;
+  color: #fff;
+  width: 300px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.tipos {
+  margin-bottom: 50px;
+  background-color:grey;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.tipos p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);
+  color: #fff;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.tipos p span {
+  flex: 1 1 60%;
+  min-width: 200px;
+}
+
+.tipos p img {
+  flex: 1 1 35%;
+  max-width: 180px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.titulo-investidores {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 40px 0 20px;
+}
+
+.investidores {
+  display: flex;
+  justify-content: space-around;
+  background: gray;
+  gap: 20px;
+  border-radius: 15px;
+  width: 100%;
+  padding: 30px 0;
+  flex-wrap: wrap;
+}
+
+.investidor {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.investidor img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.investidor h3 {
+  font-size: 1.3rem;
+  color: #FFD700;
+  margin-bottom: 10px;
+}
+
+.investidor p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.destaque {
+  font-weight: bold;
+  color:white;
+  text-align: center;
+  margin-top: 20px;
+
+}
+
+.dica {
+
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 12px;
+  text-align: center;
+  
+}
+
+.dica img {
+  margin-top: 10px;
+  border-radius: 8px;
+  max-width: 90%;
+  height: auto;
+}
+
+.sobreBlog, .sobreMim {
+  margin: auto;
+  width: 75%;
+  align-items:center;
+  padding: 40px 30px;
+  background: white;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sobreBlog h2, .sobreMim h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.sobreBlog p, .sobreBlog ul,
+.sobreMim p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sobreBlog ul {
+  padding-left: 25px;
+  margin-top: 15px;
+}
+
+.foto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.foto img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-items: center;
+}
+
+
+.sobreBlog li {
+  margin-bottom: 10px;
+  list-style-type: disc;
+  align-items: center;
+}
+/* Estilos para o Quiz */
+.questao {
+  margin-bottom: 20px;
+}
+
+.questao label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.questao input {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #0d0d0d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.texto_quiz{
+  text-align: center; 
+  margin-bottom: 20px; 
+  font-size: 1.1rem; 
+  color: #ddd;
+}
+
+button:hover {
+  background-color: #ffcc00;
+}
+
+
+
+.login {
+  height: var(--tamanho-login);
+  background-size: cover;
+}
+
+.login .container {
+display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.card {
+  width: 50%;
+  background-color:black;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: yellow;
+  flex-direction: column;
+
+  padding: 20px 0;
+}
+
+.card.card-cadastro{
+    height: 10000;
+}
+
+
+.card h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.formulario {
+  display: flex;
+  height: 90%;
+  width: 80%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.formulario span {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.formulario input {
+  border: 2px solid ;
+  text-align: center;
+  border-radius: 10px;
+  margin: 0;
+  height: 30px;
+}
+
+.formulario select {
+  border: 2px solid #003366;
+  background-color: black;
+  color: white;
+  height: 36px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 5px 0;
+}
+
+
+.botao {
+  cursor: pointer;
+  font-family: "Barlow", sans-serif;
+  border: 0;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  background-color: white;
+  width: 120px;
+  height: 40px;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.loading-div {
+  width: 50px;
+  display: none;
+}
+
+.loading-div img {
+  height: 50px;
+  width: 50px;
+}
+
+#div_erros_login {
+  display: none
+}
+footer {
+  background-color: #001f3f;
+  color: #ccc;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+footer a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
