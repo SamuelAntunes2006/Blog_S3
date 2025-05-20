@@ -264,6 +264,18 @@ body {
   width: 300px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
+.calculadora {
+  display: flex; /* só se você quer os filhos da calculadora em flex */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
+  color: black;
+  width: 300px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
 
 .tipos {
   margin-bottom: 50px;
@@ -536,7 +548,6 @@ display: flex;
   justify-content: start;
   padding: 5px 0;
 }
-
 
 .botao {
   cursor: pointer;

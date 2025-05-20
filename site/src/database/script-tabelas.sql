@@ -1,7 +1,6 @@
 -- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
 -- Você precisa executar os comandos no banco de dados para criar as tabelas,
 -- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
 /*
 comandos para mysql server
 */
@@ -14,9 +13,8 @@ USE blog_s3;
     email VARCHAR(100) NOT NULL,
     idade INT NOT NULL,
     senha VARCHAR(100) NOT NULL,
-    perfil_de_investidor ENUM('Conservador', 'Moderado', 'Arrojado') NOT NULL
+    perfil ENUM('Conservador', 'Moderado', 'Arrojado') NOT NULL
 );
-
 
 CREATE TABLE investimento (
     id INT PRIMARY KEY AUTO_INCREMENT,

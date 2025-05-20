@@ -1,120 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en">
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
-
-
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-
-    <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador de Investimentos</title>
+  <link rel="stylesheet" href="/public/csspagina.css">
 </head>
-
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
-
-    <div class="janela">
-
-        <div class="header-left dash-header">
-
-            <h1>AquaTech</h1>
-
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
-
-            <div class="btn-nav">
-                <h3>Aquários</h3>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./dashboard.html">
-                    <h3>Gráficos</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
-        </div>
-
-        <div class="dash">
-            <div id="alerta">
-            </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cards" id="cardAquarios">
-
-            </div>
-
-        </div>
-
+<body>
+    <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="/quiz.html">Quiz</a></li>
+          <li><a href="/public/index.html">Home</a></li>
+        </ul>
+      </nav>
     </div>
+    <div class="tituloheader">
+      <h2>Vamos Simular!</h2>
+    </div>
+  </header>
+<br><br>
+  <div class="texto_quiz">
+<h3>
+  Use o simulador para planejar seus investimentos e visualizar quanto seu dinheiro pode render ao longo do tempo.
+</h3>
+  </div>
 
-</body>
+  <main class="cadastro-container">
+    <div class="cadastro-box">
+      <h2>Simulador de Investimentos</h2>
+    
+      <p>Valor do Investimento (R$): </p>
+      <input type="number" id="ipt_investimento" placeholder="Valor inicial">
 
-<script>
+      <p>Digite o Aporte Mensal: </p>
+      <input type="number" id="ipt_aporte" placeholder="Aporte mensal" >
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
+      <p>Tempo de Aplicação (meses):</p>
+      <input type="number" id="ipt_periodo" placeholder="Quantidade de meses">
+
+      <p>Tipo de Investimento:</p>
+      <select id="ipt_taxa">
+        <option value="selic">Tesouro Direto (0.15% ao mês)</option>
+        <option value="cdb">CDB (1% ao mês)</option>
+        <option value="poupanca">Poupança (0,5% ao mês)</option>
+      </select>
+      <button onclick="simular()">Simular</button>
+      <div id="div_resultado" class="resultado"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
+    <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
+  </footer>
+
+  <script>
+    function simular() {
+      // Pegando os valores dos inputs
+      var investimentoInicial = Number(ipt_investimento.value);
+      var aporteMensal = Number(ipt_aporte.value);
+      var periodos = Number(ipt_periodo.value);
+      var tipoInvestimento = ipt_taxa.value;
+      
+      // Definindo a taxa com base no tipo de investimento
+      var taxa = 0;
+      if (tipoInvestimento === 'Tesouro Direto') {
+        taxa = 0.015; 
+      } else if (tipoInvestimento === 'cdb') {
+        taxa = 0.01; 
+      } else if (tipoInvestimento === 'poupanca') {
+        taxa = 0.005;  
+      }
+
+      // Calculando o valor futuro do investimento com os aportes mensais
+      var valorFuturo = investimentoInicial;
+      for (var i = 0; i < periodos; i++) {
+        valorFuturo *= (1 + taxa) * periodos;  
+      }
+
+      // Calculando os aportes mensais
+      for (var i = 1; i <= periodos; i++) {
+        valorFuturo += aporteMensal;
+        var tempValor = valorFuturo;
+
+        // Aplicando a taxa de juros para cada aporte
+        for (var j = i; j < periodos; j++) {
+          tempValor *= (1 + taxa);
+        }
+        valorFuturo = tempValor;
+      }
+
+      // Calculando o total investido e os juros recebidos
+      var totalInvestido = investimentoInicial + (aporteMensal * periodos);
+      var jurosRecebidos = valorFuturo - totalInvestido;
+
+      // Exibindo os resultados com melhor formatação
+      div_resultado.innerHTML = `
+        <p><span class="valor">Valor Futuro:</span> R$${valorFuturo.toFixed(2).replace('.', ',')}</p>
+        <p><span class="valor">Total Investido:</span> R$${totalInvestido.toFixed(2).replace('.', ',')}</p>
+        <p><span class="valor">Juros Recebidos:</span> R$${jurosRecebidos.toFixed(2).replace('.', ',')}</p>
+      `;
     }
-
-</script>
-
+  </script>
+</body>
 </html>

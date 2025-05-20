@@ -1,11 +1,12 @@
 var ambiente_processo = 'producao';
+
 // var ambiente_processo = 'desenvolvimento';
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 
-// Acima, temos o uso do operador ternário para definir o caminho do arquivo .env
-// A sintaxe do operador ternário é: condição ? valor_se_verdadeiro : valor_se_falso
+require("dotenv").config({ path: caminho_env }); // <-- CARREGUE AQUI PRIMEIRO
 
-require("dotenv").config({ path: caminho_env });
+const { executar } = require("./src/database/config"); // <-- DEPOIS IMPORTE
+
 
 var express = require("express");
 var cors = require("cors");
@@ -14,6 +15,7 @@ var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
 
 var app = express();
+
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
@@ -38,6 +40,9 @@ app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 
+console.log("User:", process.env.DB_USER);
+console.log("Senha:", process.env.DB_PASSWORD);
+
 app.listen(PORTA_APP, function () {
     console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
@@ -53,4 +58,5 @@ app.listen(PORTA_APP, function () {
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
+    
 });

@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="csspagina.css">
 </head>
-<body onload="listar()">
+<body>
   <header class="header2">
     <div class="cabecalho cadastro-header">
       <h1 class="titulo"><a href="index.html">[S]³</a></h1>
@@ -32,12 +32,7 @@
     <div class="container">
       <div class="card card-cadastro">
         <h2>Olá Futuro Investidor!</h2>
-        <div class="formulario">
-          <!--
-                         Para inserir mais um campo, copie uma das inputs abaixo.
-                         Assim que inserir vá para o script abaixo.
-                     -->
-         
+        <div class="formulario">       
           <div class="campo">
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome" />
@@ -47,8 +42,8 @@
             <input id="email_input" type="text" placeholder="meuemail@gmail.cm" />
           </div>
           <div class="campo">
-            <span>Cpf:</span>
-            <input id="cpf_input" type="text" placeholder="xxx.xxx.xxx-xx" />
+            <span>Idade:</span>
+            <input id="idade_input" type="number" placeholder="Sua Idade" />
           </div>
           <div class="campo">
             <span>Senha:</span>
@@ -60,7 +55,7 @@
           </div>
           <div class="campo">
             <span>Selecione o Tipo de Investidor que você se considera:</span>
-          <select id="perfil" name="perfil" required>
+          <select id="perfil_select" name="perfil" required>
         <option value="">Selecione...</option>
         <option value="conservador">Conservador</option>
         <option value="moderado">Moderado</option>
@@ -87,181 +82,100 @@
 </body>
 
 </html>
-
 <script>
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+function cadastrar() {
+  var nomeVar = nome_input.value;
+  var emailVar = email_input.value;
+  var idadeVar = Number(idade_input.value);
+  var senhaVar = senha_input.value;
+  var confirmacaoSenhaVar = confirmacao_senha_input.value;
+  var perfilVar = perfil_select.value;
 
-  function cadastrar() {
-    // aguardar();
+  console.log({
+  nome_completo: nomeVar,
+  email: emailVar,
+  idade: idadeVar,
+  senha: senhaVar,
+  perfil: perfilVar
+});
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var cpfVar = cpf_input.value;
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var perfilVar = perfil_select.value
-
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      cpfVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      perfilVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
-
-    if(nomeVar.length < 1){
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    }else{ 
-      setInterval(sumirMensagem, 5000);
-    }
-    if(emailVar && '@'){
-      
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    }else{ 
-      setInterval(sumirMensagem, 5000);
-    }}
-    
-
-    if(senhaVar < 5){
-      
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    }else{ 
-      setInterval(sumirMensagem, 5000);
-    }
-
-    if(confirmacaoSenhaVar == senha){
-
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    }else{ 
-      setInterval(sumirMensagem, 5000);
-    }
-
-    if(cpf.length == 11){
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    }else{ 
-      setInterval(sumirMensagem, 5000);
-    }
-
-
-    
-
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
-    }
-
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        cpfServer: cpfVar,
-        idEmpresaVincularServer: idEmpresaVincular
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
-  
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
+  if (
+    nomeVar == "" ||
+    emailVar == "" ||
+    idadeVar == ""|| 
+    senhaVar == "" ||
+    confirmacaoSenhaVar == "" ||
+    perfilVar == ""
+  ) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = "Preencha todos os campos.";
+    return;
   }
 
-  function sumirMensagem() {
-    cardErro.style.display = "none";
+ if (idadeVar == "" || isNaN(idadeVar)) {
+  cardErro.style.display = "block";
+  mensagem_erro.innerHTML = "Idade inválida.";
+  return;
+}
+
+
+  if (!emailVar.includes("@") || !emailVar.includes(".")) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = "E-mail inválido.";
+    return;
   }
+
+  if (senhaVar.length < 5) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = "A senha deve conter ao menos 5 caracteres.";
+    return;
+  }
+
+  if (senhaVar !== confirmacaoSenhaVar) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = "As senhas não coincidem.";
+    return;
+  }
+
+ fetch("/usuarios/cadastrar", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    nome_completo: nomeVar,
+    email: emailVar,
+    idade: Number(idadeVar), 
+    senha: senhaVar,
+    perfil: perfilVar
+  })
+
+})
+
+.then(function (resposta) {
+  if (resposta.ok) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
+    setTimeout(() => {
+      window.location = "login.html";
+    }, 2000);
+  } else {
+    resposta.text().then(texto => {
+      console.warn("Resposta do servidor:", texto);
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Erro ao cadastrar: " + texto;
+    });
+  }
+})
+
+.catch(function (erro) {
+  console.error("#ERRO: ", erro);
+  cardErro.style.display = "block";
+  mensagem_erro.innerHTML = "Erro inesperado ao tentar cadastrar.";
+});
+}
 </script>
+
+
+
