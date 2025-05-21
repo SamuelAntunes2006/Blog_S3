@@ -15,6 +15,7 @@ var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
 
 var app = express();
+app.use(express.static('public'));
 
 
 var indexRouter = require("./src/routes/index");
