@@ -1,0 +1,50 @@
+
+.layout-flex {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+    }
+
+    .simulador-box, .grafico-box {
+      background-color: white ;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      flex: 1 1 400px;
+      max-width: 500px;
+      color: #000;
+    }
+
+    .simulador-box h2, .grafico-box h3 {
+      margin-top: 0;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #div_resultado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    canvas {
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    .pontu

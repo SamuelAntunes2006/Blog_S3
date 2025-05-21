@@ -1,77 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investimentos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="csspagina.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Investimentos</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="dashboards.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <header class="header">
-        <div class="cabecalho">
-            <h1 class="titulo">[S]³</h1>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <li><a href="index.html">Início</a></li>
-            
-                </ul>
-            </nav>
-        </div>
-    
-        <div class="tituloheader">
-            <h2>Seja Bem-Vindo(a) ao Blog [S]³</h2>
-        </div>
-    
-        <div class="welcome-message">
-            Este blog tem como objetivo incentivar e orientar quem deseja
-                começar a investir, independentemente da condição financeira, mostrando que é possível alcançar objetivos financeiros </p>
-          </div>
-    </header>
-  <main>
-    <br>
-    <br>
-    <div class="sobreBlog">
-    <section>
-      <h2>Bem-vindo ao nosso blog de investimentos!</h2>
-      <p>
-        Criamos este espaço com um objetivo claro: tornar o mundo dos investimentos mais acessível, simples e descomplicado para todos.
-        Sabemos que começar a investir pode parecer algo distante ou complicado  por isso, nosso compromisso é mostrar que você não precisa ser um especialista para cuidar bem do seu dinheiro.
-      </p>
-      <p>Aqui, você vai encontrar:</p>
-      <ul>
-        <li>📚 Conteúdo educativo sobre investimentos em renda fixa e renda variável.</li>
-        <li>📈 Dicas práticas para aplicar seu dinheiro com segurança e estratégia.</li>
-        <li>🧮 Calculadoras e simuladores para ajudar você a planejar e visualizar seus ganhos.</li>
-      </ul>
-      <p>
-        Nosso blog é voltado tanto para quem está dando os primeiros passos, quanto para quem já investe e quer aprimorar seus conhecimentos.
-        Acreditamos que educação financeira é uma ferramenta poderosa — e que, com informação de qualidade, qualquer pessoa pode alcançar seus objetivos financeiros.
-      </p>
-    </section>
-</div>
-<br>
-    <section>
-        <div class="sobreMim">
-      <h2>Sobre mim</h2>
-      <div class="foto">
-      <img src="/public/assets/1744683634191.jpeg" height=120>
-      </div>
-      <br>
-      <p>
-        Meu nome é Samuel Antunes, tenho 18 anos e sou estudante de Ciência da Computação na SPTech.
-        Sou formado como técnico em Administração e tenho grande interesse por tecnologia, sempre buscando aprender e evoluir constantemente.
-        Vejo o mundo dos investimentos como uma área fundamental para o crescimento pessoal e financeiro, e por isso, também me dedico a entender mais sobre esse tema.
-      </p>
-    </section>
+<body onload="exibirAquarios(), atualizacaoPeriodica()">
+  <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="index.html">Home</a></li>
+        </ul>
+      </nav>
     </div>
-    
+    <div class="tituloheader">
+      <h2>Vamos Simular!</h2>
+    </div>
+  </header>
+  
+  <main class="layout-flex">
+    <div class="simulador-box">
+      <h2>Simulador de Investimentos</h2>
+
+      <label>Valor do Investimento (R$):</label>
+      <input type="number" id="ipt_investimento" placeholder="Valor inicial">
+
+      <label>Digite o Aporte Mensal:</label>
+      <input type="number" id="ipt_aporte" placeholder="Aporte mensal">
+
+      <label>Tempo de Aplicação (meses):</label>
+      <input type="number" id="ipt_periodo" placeholder="Quantidade de meses">
+
+      <label>Tipo de Investimento:</label>
+      <select id="ipt_taxa">
+        <option value="selic">Tesouro Direto (0.15% ao mês)</option>
+        <option value="cdb">CDB (1% ao mês)</option>
+        <option value="poupanca">Poupança (0.5% ao mês)</option>
+      </select>
+
+      <button onclick="simular()">Simular</button>
+
+      <div id="div_resultado"></div>
+    </div>
+    <div class="grafico-box">
+      <h3>Evolução Mensal do Investimento</h3>
+      <canvas id="graficoLinha" width="400" height="200"></canvas>
+
+      <h3 style="margin-top: 30px;">Resumo Final</h3>
+      <canvas id="graficoBarra" width="300" height="200"></canvas>
+    </div>
+
   </main>
 
-  <footer>
-    <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
-    <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
-  </footer>
+  <script>
+    let chartLinha;
+    let chartBarra;
+
+    function simular() {
+      let investimento = Number(ipt_investimento.value);
+      let aporte = Number(ipt_aporte.value) ;
+      let periodo = Number(ipt_periodo.value );
+      let tipo = ipt_taxa.value;
+
+      let taxa = 0;
+      if (tipo === "selic") taxa = 0.0015;
+      if (tipo === "cdb") taxa = 0.01;
+      if (tipo === "poupanca") taxa = 0.005;
+
+      let valores = [];
+      let total = investimento;
+
+      for (let i = 0; i < periodo; i++) {
+        total = (total + aporte) * (1 + taxa);
+        valores.push(total.toFixed(2));
+      }
+
+      div_resultado.innerHTML = `
+        <p>Valor final após ${periodo} meses: <strong>R$ ${total.toFixed(2)}</strong></p>
+      `;
+
+      // Gráfico de Linha
+      if (chartLinha) chartLinha.destroy();
+      const ctx1 = document.getElementById('graficoLinha').getContext('2d');
+      chartLinha = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: periodo}, (_, i) => `Mês ${i + 1}`),
+          datasets: [{
+            label: 'Valor acumulado (R$)',
+            data: valores,
+            borderColor: 'rgb(255, 204, 0)',
+            backgroundColor: 'rgba(255, 204, 0, 0.2)',
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Gráfico de Barras
+      if (chartBarra) chartBarra.destroy();
+      const ctx2 = document.getElementById('graficoBarra').getContext('2d');
+      chartBarra = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: ['Total Investido', 'Valor Final'],
+          datasets: [{
+            label: 'Comparativo em (R$)',
+            data: [investimento + (aporte * periodo), total],
+            backgroundColor: ['#888', '#ffcc00']
+          }]
+        },
+        options: {
+          responsive: true,
+          indexAxis: 'y'
+        }
+      });
+    }
+  </script>
 </body>
 </html>
