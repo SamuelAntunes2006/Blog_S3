@@ -1,21 +1,16 @@
-# 📊 Simulador de Investimentos
+## Bem-vindo ao nosso blog de investimentos [S]³!
 
-Este é um projeto web simples de **simulação de investimentos** com **gráficos interativos** utilizando **HTML**, **CSS**, **JavaScript** e a biblioteca **Chart.js**. Com ele, você pode visualizar a evolução do seu investimento ao longo do tempo e comparar o valor final com o total aportado.
+Criamos este espaço com um objetivo claro: tornar o mundo dos investimentos mais acessível, simples e descomplicado para todos. Sabemos que começar a investir pode parecer algo distante ou complicado por isso, nosso compromisso é mostrar que você não precisa ser um especialista para cuidar bem do seu dinheiro.
 
-## 🚀 Funcionalidades
+## Aqui, você vai encontrar:
 
-- Simulação de investimentos com diferentes tipos (Tesouro Direto, CDB e Poupança)
-- Cálculo do valor acumulado com juros compostos
-- Gráfico de linha mostrando a evolução mensal do investimento
-- Gráfico de barras comparando o total investido e o valor final
-- Interface intuitiva e responsiva
+📚 Conteúdo educativo sobre investimentos em renda fixa e renda variável.
 
-## 🛠 Tecnologias Utilizadas
+📈 Dicas práticas para aplicar seu dinheiro com segurança e estratégia.
 
-- **HTML5**
-- **CSS3**
-- **JavaScript (Vanilla)**
-- **[Chart.js](https://www.chartjs.org/)** – para renderização dos gráficos
+🧮 Calculadoras e simuladores para ajudar você a planejar e visualizar seus ganhos.
+
+Nosso blog é voltado tanto para quem está dando os primeiros passos, quanto para quem já investe e quer aprimorar seus conhecimentos. Acreditamos que educação financeira é uma ferramenta poderosa — e que, com informação de qualidade, qualquer pessoa pode alcançar seus objetivos financeiros.
 
 ## 💡 Como Usar
 
