@@ -21,4 +21,4 @@ Este é um projeto web simples de **simulação de investimentos** com **gráfic
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/simulador-investimentos.git
+   git clone https://github.com/SamuelAntunes2006/Blog_S3.git
