@@ -42,6 +42,7 @@ body {
 }
 
 .titulo {
+  text-align: center;
   font-size: 3rem;
   font-weight: bold;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
@@ -49,6 +50,7 @@ body {
 
 
 .tituloheader h2 {
+  text-align: center;
   font-size: 2rem;
   font-weight: bold;
   color: white;
@@ -79,6 +81,7 @@ body {
   background-color: #ffcc00;
   color: #000;
 }
+
 
 .welcome-message {
   position: absolute;
@@ -240,6 +243,7 @@ body {
   margin-bottom: 50px;
   padding: 30px;
   border-radius: 15px;
+  text-align: center;
 }
 
 .conteudo {
@@ -275,6 +279,13 @@ body {
   padding: 30px;
   border-radius: 15px;
 }
+
+.tipos.p :hover{
+     transform: scale(1.1);
+     background-color: #000;
+}
+
+
 
 .tipos p {
   display: flex;
@@ -319,6 +330,7 @@ body {
   width: 100%;
   padding: 30px 0;
   flex-wrap: wrap;
+  
 }
 
 .investidor {
@@ -330,6 +342,10 @@ body {
   width: 280px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
   transition: transform 0.3s ease;
+}
+.investidor:hover{
+  transform: scale(1.1);
+  background-color: black;
 }
 
 .investidor img {

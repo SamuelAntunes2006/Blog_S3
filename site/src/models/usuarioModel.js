@@ -28,9 +28,20 @@ function verificarEmailExistente(email) {
   return database.executar(instrucao);
 }
 
+function salvarRespostasQuiz(usuarioId, pergunta_id, alternativa_id) {
+    console.log("ACESSEI O USUARIO MODEL - salvarRespostasQuiz");
+    var instrucaoSql = `
+        INSERT INTO quiz_resposta (usuario_id, pontuacao, certas, erradas)
+        VALUES (${usuarioId}, ${pontuacao}, ${certas}, ${erradas});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     autenticar,
     cadastrar,
-    verificarEmailExistente
+    verificarEmailExistente,
+    salvarRespostasQuiz
 };

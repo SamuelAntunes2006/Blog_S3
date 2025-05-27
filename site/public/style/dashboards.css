@@ -47,4 +47,14 @@
       border-radius: 10px;
     }
 
-    .pontu
+    .simulador-box2 {
+      background-color: black ;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      flex: 1 1 400px;
+      max-width: 500px;
+      color: white;
+      margin: 500px;
+      margin-top: 130px;
+    }

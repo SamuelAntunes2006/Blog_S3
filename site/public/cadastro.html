@@ -1,11 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | S³ Investimentos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/style/main.css">
+  
+  <title>Quiz de Investimentos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Barlow:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Barlow', 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #003366;
+      color: white;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header2 {
+      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                      url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      border-bottom: 5px solid #ffcc00;
+      padding: 30px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cabecalho {
+      width: 100%;
+      text-align: center;
+    }
+
+    .titulo {
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      margin-bottom: 20px;
+    }
+
+    .navbar ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .navbar a {
+      color: #ffcc00;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .tituloheader h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    main {
+      background-color: white;
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      min-height: 300px;
+      margin: 30px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: white;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 15px;
+    }
+
+    .spnQtd {
+      text-align: right;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .answers button {
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #008CCC;
+      color: white;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .answers button:hover {
+      background-color: #006699;
+    }
+
+    .finish {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+
+    .finish span {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .finish button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #0d0d0d;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .finish button:hover {
+      background-color: #222;
+    }
+
+    footer {
+      background-color: #001f3f;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #ffcc00;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .header2 {
+        height: auto;
+        padding: 20px;
+      }
+      
+      .titulo {
+        font-size: 2rem;
+      }
+      
+      .tituloheader h2 {
+        font-size: 1.5rem;
+      }
+      
+      main {
+        width: 95%;
+        padding: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="header2">
@@ -13,170 +220,159 @@
       <h1 class="titulo">[S]³</h1>
       <nav class="navbar">
         <ul>
-          <li><a href="login.html">Login</a></li>
-          <a href="index.html">Home</a>
+          <li><a href="/public/simulador.html">Simulador</a></li>
+          <li><a href="index.html">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="tituloheader">
-      <h2>Cadastre-se e comece a investir!</h2>
+      <h2>Quiz de Investimentos!</h2>
     </div>
   </header>
-  <!--header fim-->
-
-  <div class="login">
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
+  
+  <h2>Teste seus conhecimentos</h2>
+  
+  <main>
+    <div class="content">
+      <span class="spnQtd"></span>
+      <span class="question"></span>
+      <div class="answers"></div>
     </div>
-    <div class="container">
-      <div class="card card-cadastro">
-        <h2>Olá Futuro Investidor!</h2>
-        <div class="formulario">       
-          <div class="campo">
-            <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
-          </div>
-          <div class="campo">
-            <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@gmail.cm" />
-          </div>
-          <div class="campo">
-            <span>Idade:</span>
-            <input id="idade_input" type="number" placeholder="Sua Idade" />
-          </div>
-          <div class="campo">
-            <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
-          </div>
-          <div class="campo">
-            <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
-          </div>
-          <div class="campo">
-            <span>Selecione o Tipo de Investidor que você se considera:</span>
-          <select id="perfil_select" name="perfil" required>
-        <option value="">Selecione...</option>
-        <option value="conservador">Conservador</option>
-        <option value="moderado">Moderado</option>
-        <option value="arrojado">Arrojado</option>
-      </select>
-          </div>
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
-        </div>
-        <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif" />
-        </div>
-
-        <div id="div_erros_login"></div>
-      </div>
+    <div class="finish">
+      <span></span>
+      <button>Reiniciar</button>
     </div>
-  </div>
-
-  <!--footer inicio-->
+  </main>
+  
   <footer>
-    <p>&copy; 2025 [S]³ Investimentos. Todos os direitos reservados.</p>
-    <p><a href="sobre.html">samuel.asantos2006@sptech.school</a></p>
+    <p>© 2023 [S]³ - Todos os direitos reservados</p>
   </footer>
-  <!--footer fim-->
-</body>
 
-</html>
-<script>
+  <script>
+    // Quiz questions
+    const questions = [
+      {
+        question: "Qual é considerado o investimento mais seguro no Brasil?",
+        answers: [
+          { option: "Ações", correct: false },
+          { option: "Tesouro Direto", correct: true },
+          { option: "Fundos Imobiliários", correct: false },
+          { option: "Criptomoedas", correct: false }
+        ]
+      },
+      {
+        question: "O que significa a sigla CDI?",
+        answers: [
+          { option: "Certificado de Depósito Interbancário", correct: true },
+          { option: "Conta de Depósito Internacional", correct: false },
+          { option: "Certificado de Dividendos Imobiliários", correct: false },
+          { option: "Contrato de Derivativos Imobiliários", correct: false }
+        ]
+      },
+      {
+        question: "Qual destes NÃO é um tipo de fundo de investimento?",
+        answers: [
+          { option: "Fundo DI", correct: false },
+          { option: "Fundo Multimercado", correct: false },
+          { option: "Fundo de Ações", correct: false },
+          { option: "Fundo de Poupança", correct: true }
+        ]
+      },
+      {
+        question: "O que significa diversificação em investimentos?",
+        answers: [
+          { option: "Investir todo o dinheiro em um único ativo", correct: false },
+          { option: "Distribuir os investimentos em diferentes tipos de ativos", correct: true },
+          { option: "Comprar apenas ações de uma única empresa", correct: false },
+          { option: "Manter todo o dinheiro na poupança", correct: false }
+        ]
+      },
+      {
+        question: "Qual é a principal vantagem da renda fixa?",
+        answers: [
+          { option: "Alta rentabilidade garantida", correct: false },
+          { option: "Previsibilidade de retorno", correct: true },
+          { option: "Possibilidade de ganhos ilimitados", correct: false },
+          { option: "Isenção total de impostos", correct: false }
+        ]
+      }
+    ];
 
-function cadastrar() {
-  var nomeVar = nome_input.value;
-  var emailVar = email_input.value;
-  var idadeVar = Number(idade_input.value);
-  var senhaVar = senha_input.value;
-  var confirmacaoSenhaVar = confirmacao_senha_input.value;
-  var perfilVar = perfil_select.value;
+    // Quiz variables
+    let currentQuestion = 0;
+    let correctAnswers = 0;
 
-  console.log({
-  nome_completo: nomeVar,
-  email: emailVar,
-  idade: idadeVar,
-  senha: senhaVar,
-  perfil: perfilVar
-});
+    // DOM elements
+    const spnQtd = document.querySelector(".spnQtd");
+    const questionElement = document.querySelector(".question");
+    const answersElement = document.querySelector(".answers");
+    const finishElement = document.querySelector(".finish");
+    const finishSpan = document.querySelector(".finish span");
+    const finishButton = document.querySelector(".finish button");
 
-  if (
-    nomeVar == "" ||
-    emailVar == "" ||
-    idadeVar == ""|| 
-    senhaVar == "" ||
-    confirmacaoSenhaVar == "" ||
-    perfilVar == ""
-  ) {
-    cardErro.style.display = "block";
-    mensagem_erro.innerHTML = "Preencha todos os campos.";
-    return;
-  }
+    // Initialize quiz
+    function init() {
+      spnQtd.innerHTML = `${currentQuestion + 1}/${questions.length}`;
+      loadQuestion();
+    }
 
- if (idadeVar == "" || isNaN(idadeVar)) {
-  cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "Idade inválida.";
-  return;
-}
+    // Load question
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.innerHTML = question.question;
+      
+      answersElement.innerHTML = "";
+      question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.option;
+        button.addEventListener("click", () => selectAnswer(answer.correct));
+        answersElement.appendChild(button);
+      });
+    }
 
+    // Select answer
+    function selectAnswer(correct) {
+      if (correct) {
+        correctAnswers++;
+      }
+      
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        init();
+      } else {
+        finish();
+      }
+    }
 
-  if (!emailVar.includes("@") || !emailVar.includes(".")) {
-    cardErro.style.display = "block";
-    mensagem_erro.innerHTML = "E-mail inválido.";
-    return;
-  }
+    // Finish quiz
+    function finish() {
+      const percentage = Math.round((correctAnswers / questions.length) * 100);
+      let message = "";
+      
+      if (percentage >= 80) {
+        message = `Parabéns! Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Excelente conhecimento sobre investimentos!`;
+      } else if (percentage >= 50) {
+        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Bom resultado, mas pode melhorar!`;
+      } else {
+        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Recomendamos estudar mais sobre investimentos.`;
+      }
+      
+      finishSpan.innerHTML = message;
+      document.querySelector(".content").style.display = "none";
+      finishElement.style.display = "flex";
+    }
 
-  if (senhaVar.length < 5) {
-    cardErro.style.display = "block";
-    mensagem_erro.innerHTML = "A senha deve conter ao menos 5 caracteres.";
-    return;
-  }
-
-  if (senhaVar !== confirmacaoSenhaVar) {
-    cardErro.style.display = "block";
-    mensagem_erro.innerHTML = "As senhas não coincidem.";
-    return;
-  }
-
- fetch("/usuarios/cadastrar", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    nome_completo: nomeVar,
-    email: emailVar,
-    idade: Number(idadeVar), 
-    senha: senhaVar,
-    perfil: perfilVar
-  })
-
-})
-
-.then(function (resposta) {
-  if (resposta.ok) {
-    cardErro.style.display = "block";
-    mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando...";
-    setTimeout(() => {
-      window.location = "login.html";
-    }, 2000);
-  } else {
-    resposta.text().then(texto => {
-      console.warn("Resposta do servidor:", texto);
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "Erro ao cadastrar: " + texto;
+    // Restart quiz
+    finishButton.addEventListener("click", () => {
+      currentQuestion = 0;
+      correctAnswers = 0;
+      document.querySelector(".content").style.display = "flex";
+      finishElement.style.display = "none";
+      init();
     });
-  }
-})
 
-.catch(function (erro) {
-  console.error("#ERRO: ", erro);
-  cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "Erro inesperado ao tentar cadastrar.";
-});
-}
-</script>
-
-
-
+    // Start quiz
+    init();
+  </script>
+</body>
+</html>

@@ -7,13 +7,11 @@ function cadastrar(req, res) {
   var senha = req.body.senha;
   var perfil = req.body.perfil;
 
-  // Verifica se o e-mail já está cadastrado
   usuarioModel.verificarEmailExistente(email)
     .then(usuarios => {
       if (usuarios.length > 0) {
         return res.status(409).send("E-mail já cadastrado.");
       }
-      // Se não existir, realiza o cadastro
       return usuarioModel.cadastrar(nome_completo, email, idade, senha, perfil);
     })
     .then(resultado => {
@@ -62,8 +60,28 @@ function listar(req, res) {
     });
 }
 
+var usuarioModel = require("../models/usuarioModel");
+
+function salvarRespostasQuiz(req, res) {
+    var usuarioId = req.body.usuarioId;
+    var pontuacao = req.body.pontuacao;
+    var certas = req.body.certas;
+    var erradas = req.body.erradas;
+
+    usuarioModel.salvarRespostasQuiz(usuarioId, pontuacao, certas, erradas)
+        .then(function(resultado) {
+            res.json(resultado);
+        })
+        .catch(function(erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao salvar as respostas do quiz! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
   cadastrar,
   autenticar,
-  listar
+  listar,
+  salvarRespostasQuiz
 };

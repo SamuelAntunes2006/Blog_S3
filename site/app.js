@@ -39,7 +39,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
-app.use("/empresas", empresasRouter);
+
 
 console.log("User:", process.env.DB_USER);
 console.log("Senha:", process.env.DB_PASSWORD);

@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simulador de Investimentos</title>
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="dashboards.css">
+  <link rel="stylesheet" href="/public/style/main.css">
+  <link rel="stylesheet" href="/public/style/dashboards.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body onload="exibirAquarios(), atualizacaoPeriodica()">
@@ -23,7 +23,7 @@
       <h2>Vamos Simular!</h2>
     </div>
   </header>
-  
+
   <main class="layout-flex">
     <div class="simulador-box">
       <h2>Simulador de Investimentos</h2>
@@ -59,6 +59,7 @@
   </main>
 
   <script>
+
     let chartLinha;
     let chartBarra;
 
@@ -84,7 +85,7 @@
       div_resultado.innerHTML = `
         <p>Valor final após ${periodo} meses: <strong>R$ ${total.toFixed(2)}</strong></p>
       `;
-
+      
       // Gráfico de Linha
       if (chartLinha) chartLinha.destroy();
       const ctx1 = document.getElementById('graficoLinha').getContext('2d');

@@ -1,315 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simulador de Investimentos</title>
-  <link rel="stylesheet" href="main.css">
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/style/quiz.css">
+ <title>Quiz de Investimentos</title>
 </head>
 <body>
-   <header class="header2">
+  <header class="header2">
     <div class="cabecalho cadastro-header">
       <h1 class="titulo">[S]³</h1>
       <nav class="navbar">
         <ul>
-          <li><a href="/simulador.html">Simulador</a></li>
-          <li><a href="/index.html">Home</a></li>
+          <li><a href="/public/simulador.html">Simulador</a></li>
+          <li><a href="index.html">Home</a></li>
         </ul>
       </nav>
     </div>
     <div class="tituloheader">
-      <h2>Vamos fazer um Quiz!</h2>
+      <h2>Quiz de Investimentos!</h2>
     </div>
   </header>
   
-<body onload="onloadEsconder()">
-    <div id="pontuacaoEJogo">
-        <div class="simulador-box">
-        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
-
-        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
-            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
-                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
-                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
-            </div>
-            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
-                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
-                    <span id="spanPontuacaoFinal">***</span>
-                </span>
-                <span id="msgFinal" class="width-fit-content">***</span>
-            </div>
-        </div>
-
-        <div id="jogo" class="width-fit-content flex-colunar border-secondary">
-
-            <div id="infoQuestao" class="padding-8">
-                <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
-                    questões.</span>
-            </div>
-
-            <div id="perguntaDaQuestaoAtual" class="padding-8">
-                <span id="spanQuestaoExibida" class="text-bold"></span>
-            </div>
-
-            <div id="infoAlternativas" class="padding-8">
-                <span><em>Escolha uma opção dentre as abaixo:</em></span>
-            </div>
-
-            <div id="opcoes" class="flex-colunar padding-8">
-                <span>
-                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
-                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
-                </span>
-                <span>
-                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
-                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
-                </span>
-                <span>
-                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
-                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
-                </span>
-                <span>
-                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
-                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
-                </span>
-            </div>
-
-            <div id="botoes" class="flex-colunar padding-8">
-                <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
-                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-                <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
-            </div>
-
-        </div>
+  <h2>Teste seus conhecimentos</h2>
+  
+  <main>
+    <div class="content">
+      <span class="spnQtd"></span>
+      <span class="question"></span>
+      <div class="answers"></div>
     </div>
+    <div class="finish">
+      <span></span>
+      <button>Reiniciar</button>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
+    <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
+  </footer>
+  <script>
+    // Quiz questions
+    const questions = [
+      {
+        question: "Qual é considerado o investimento mais seguro no Brasil?",
+        answers: [
+          { option: "Ações", correct: false },
+          { option: "Tesouro Direto", correct: true },
+          { option: "Fundos Imobiliários", correct: false },
+          { option: "Criptomoedas", correct: false }
+        ]
+      },
+      {
+        question: "O que significa a sigla CDI?",
+        answers: [
+          { option: "Certificado de Depósito Interbancário", correct: true },
+          { option: "Conta de Depósito Internacional", correct: false },
+          { option: "Certificado de Dividendos Imobiliários", correct: false },
+          { option: "Contrato de Derivativos Imobiliários", correct: false }
+        ]
+      },
+      {
+        question: "Qual destes NÃO é um tipo de fundo de investimento?",
+        answers: [
+          { option: "Fundo DI", correct: false },
+          { option: "Fundo Multimercado", correct: false },
+          { option: "Fundo de Ações", correct: false },
+          { option: "Fundo de Poupança", correct: true }
+        ]
+      },
+      {
+        question: "O que significa diversificação em investimentos?",
+        answers: [
+          { option: "Investir todo o dinheiro em um único ativo", correct: false },
+          { option: "Distribuir os investimentos em diferentes tipos de ativos", correct: true },
+          { option: "Comprar apenas ações de uma única empresa", correct: false },
+          { option: "Manter todo o dinheiro na poupança", correct: false }
+        ]
+      },
+      {
+        question: "Qual é a principal vantagem da renda fixa?",
+        answers: [
+          { option: "Alta rentabilidade garantida", correct: false },
+          { option: "Previsibilidade de retorno", correct: true },
+          { option: "Possibilidade de ganhos ilimitados", correct: false },
+          { option: "Isenção total de impostos", correct: false }
+        ]
+      }
+    ];
+
+    // Quiz variables
+    let currentQuestion = 0;
+    let correctAnswers = 0;
+
+    // DOM elements
+    const spnQtd = document.querySelector(".spnQtd");
+    const questionElement = document.querySelector(".question");
+    const answersElement = document.querySelector(".answers");
+    const finishElement = document.querySelector(".finish");
+    const finishSpan = document.querySelector(".finish span");
+    const finishButton = document.querySelector(".finish button");
+
+    // Initialize quiz
+    function init() {
+      spnQtd.innerHTML = `${currentQuestion + 1}/${questions.length}`;
+      loadQuestion();
+    }
+
+    // Load question
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.innerHTML = question.question;
+      
+      answersElement.innerHTML = "";
+      question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.option;
+        button.addEventListener("click", () => selectAnswer(answer.correct));
+        answersElement.appendChild(button);
+      });
+    }
+
+    // Select answer
+    function selectAnswer(correct) {
+      if (correct) {
+        correctAnswers++;
+      }
+      
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        init();
+      } else {
+        finish();
+      }
+    }
+
+    // Finish quiz
+    function finish() {
+      const percentage = Math.round((correctAnswers / questions.length) * 100);
+      let message = "";
+      
+      if (percentage >= 80) {
+        message = `Parabéns! Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Excelente conhecimento sobre investimentos!`;
+      } else if (percentage >= 50) {
+        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Bom resultado, mas pode melhorar!`;
+      } else {
+        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Recomendamos estudar mais sobre investimentos.`;
+      }
+      
+      finishSpan.innerHTML = message;
+      document.querySelector(".content").style.display = "none";
+      finishElement.style.display = "flex";
+    }
+
+    // Restart quiz
+    finishButton.addEventListener("click", () => {
+      currentQuestion = 0;
+      correctAnswers = 0;
+      document.querySelector(".content").style.display = "flex";
+      finishElement.style.display = "none";
+      init();
+    });
+
+    // Start quiz
+    init();
+  </script>
 </body>
-</div>
 </html>
-<script>
-    const listaDeQuestoes = [
-
-       {
-            pergunta: " O que é investir??",
-            alternativaA: "Gastar dinheiro sem preocupação de retorno",
-            alternativaB: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo",
-            alternativaC: "Guardar dinheiro sem gerar retorno",
-            alternativaCorreta: "alternativaB"
-        },
-    
-        {
-            pergunta: "O que é Tesouro Direto?",
-            alternativaA: "Um investimento em imóveis",
-            alternativaB: "Um título do governo",
-            alternativaC: "Uma ação de empresa privada",
-            alternativaCorreta: "alternativaB"
-        },
-
-        {
-            pergunta: " O que é CDB?",
-            alternativaA: "Um título do governo",
-            alternativaB: "Um investimento em ações",
-            alternativaC: "Um título bancário",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "O que significa 'rentabilidade' em investimentos?",
-            alternativaA: "Previsibilidade de retorno",
-            alternativaB: "Rendimento fixo com baixo risco",
-            alternativaC: "Ganhos ou perdas dependem do desempenho do mercado",
-            alternativaCorreta: "alternativaC"
-        },
-         {
-            pergunta: "Como o blog sugere que o investidor escolha o melhor investimento?",
-            alternativaA: "De acordo com suas metas e tolerância ao risco",
-            alternativaB: "Somente considerando o retorno financeiro",
-            alternativaC: "De acordo com o tanto de dinheiro que você tem",
-            alternativaCorreta: "alternativaA"
-        }
-
-    ]
-
-    // variáveis globais    
-    let numeroDaQuestaoAtual = 0
-    let pontuacaoFinal = 0
-    let tentativaIncorreta = 0
-    let certas = 0
-    let erradas = 0
-    let quantidadeDeQuestoes = listaDeQuestoes.length
-    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
-
-    function onloadEsconder() {
-        document.getElementById('pontuacao').style.display = "none"
-        document.getElementById('jogo').style.display = "none"
-    }
-
-    function iniciarQuiz() {
-        document.getElementById('pontuacao').style.display = "flex"
-        document.getElementById('jogo').style.display = "flex"
-        document.getElementById('btnIniciarQuiz').style.display = "none"
-
-        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
-
-        preencherHTMLcomQuestaoAtual(0)
-
-        btnSubmeter.disabled = false
-        btnProx.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = true
-    }
-
-    function preencherHTMLcomQuestaoAtual(index) {
-        habilitarAlternativas(true)
-        const questaoAtual = listaDeQuestoes[index]
-        numeroDaQuestaoAtual = index
-        console.log("questaoAtual")
-        console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
-        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
-        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
-        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
-        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
-    }
-
-    function submeter() {
-        const options = document.getElementsByName("option"); // recupera alternativas no html
-
-        let hasChecked = false
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].checked) {
-                hasChecked = true
-                break
-            }
-        }
-
-        if (!hasChecked) {
-            alert("Não há alternativas escolhidas. Escolha uma opção.")
-        } else {
-            btnSubmeter.disabled = true
-            btnProx.disabled = false
-
-            habilitarAlternativas(false)
-
-            checarResposta()
-        }
-    }
-
-    function habilitarAlternativas(trueOrFalse) {
-        let opcaoEscolhida = trueOrFalse ? false : true
-
-        primeiraOpcao.disabled = opcaoEscolhida
-        segundaOpcao.disabled = opcaoEscolhida
-        terceiraOpcao.disabled = opcaoEscolhida
-        quartaOpcao.disabled = opcaoEscolhida
-
-    }
-
-    function avancar() {
-        btnProx.disabled = true
-        btnSubmeter.disabled = false
-
-        desmarcarRadioButtons()
-
-        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
-            alert("Atenção... a próxima é a ultima questão!")
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        } else {
-            finalizarJogo()
-        }
-        limparCoresBackgroundOpcoes()
-    }
-
-    function tentarNovamente() {
-        // atualiza a página
-        window.location.reload()
-    }
-
-    function checarResposta() {
-        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
-        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
-
-        const options = document.getElementsByName("option"); // recupera alternativas no html
-
-        let alternativaCorreta = null // variável para armazenar a alternativa correta
-
-        options.forEach((option) => {
-            if (option.value === respostaQuestaoAtual) {
-                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
-                alternativaCorreta = option.labels[0].id
-            }
-        })
-
-        // verifica se resposta assinalada é correta
-        options.forEach((option) => {
-            if (option.checked === true && option.value === respostaQuestaoAtual) {
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                pontuacaoFinal++
-                certas++
-                document.getElementById("spanCertas").innerHTML = certas
-                numeroDaQuestaoAtual++
-            } else if (option.checked && option.value !== respostaQuestaoAtual) {
-                const wrongLabelId = option.labels[0].id
-
-                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                tentativaIncorreta++
-                erradas++
-                document.getElementById("spanErradas").innerHTML = erradas
-                numeroDaQuestaoAtual++
-            }
-        })
-    }
-
-    function limparCoresBackgroundOpcoes() {
-        const options = document.getElementsByName("option");
-        options.forEach((option) => {
-            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
-            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
-        })
-    }
-
-    function desmarcarRadioButtons() {
-        const options = document.getElementsByName("option");
-        for (let i = 0; i < options.length; i++) {
-            options[i].checked = false;
-        }
-    }
-
-    function finalizarJogo() {
-        let textoParaMensagemFinal = null
-        let classComCoresParaMensagemFinal = null
-        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
-
-        if (porcentagemFinalDeAcertos <= 0.3) {
-            textoParaMensagemFinal = "Parece que você não estudou..."
-            classComCoresParaMensagemFinal = "text-danger-with-bg"
-        }
-        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
-            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
-            classComCoresParaMensagemFinal = "text-warning-with-bg"
-        }
-        else if (porcentagemFinalDeAcertos >= 0.9) {
-            textoParaMensagemFinal = "Uau, parabéns!"
-            classComCoresParaMensagemFinal = "text-success-with-bg"
-        }
-
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
-
-
-        document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
-        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal) 
-        document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
-
-        document.getElementById('jogo').classList.add("text-new-gray") 
-
-        btnProx.disabled = true
-        btnSubmeter.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = false
-
-    }
-</script>
