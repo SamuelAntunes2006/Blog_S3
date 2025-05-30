@@ -1,3 +1,82 @@
+/* Reset básico e fonte */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Barlow', 'Poppins', sans-serif;
+}
+
+/* Corpo da página */
+body {
+  background: #003366;
+  color: white;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho com imagem e sombra */
+.header2 {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                    url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border-bottom: 5px solid #ffcc00;
+  padding: 30px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Título principal */
+.titulo {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+  margin-bottom: 20px;
+}
+
+/* Menu de navegação */
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.navbar a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: rgba(0,0,0,0.5);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+/* Título secundário no header */
+.tituloheader h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+
+
 .layout-flex {
       display: flex;
       gap: 30px;
