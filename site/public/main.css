@@ -445,7 +445,7 @@ body {
   list-style-type: disc;
   align-items: center;
 }
-/* Estilos para o Quiz */
+
 .questao {
   margin-bottom: 20px;
 }
@@ -481,8 +481,6 @@ button {
 button:hover {
   background-color: #ffcc00;
 }
-
-
 
 .login {
   height: var(--tamanho-login);

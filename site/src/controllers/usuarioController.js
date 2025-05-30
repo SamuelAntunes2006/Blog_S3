@@ -1,5 +1,6 @@
 var usuarioModel = require("../models/usuarioModel");
 
+// Função para cadastrar usuário
 function cadastrar(req, res) {
   var nome_completo = req.body.nome_completo;
   var email = req.body.email;
@@ -25,6 +26,7 @@ function cadastrar(req, res) {
     });
 }
 
+// Função para autenticar usuário
 function autenticar(req, res) {
   var email = req.body.email;
   var senha = req.body.senha;
@@ -49,6 +51,7 @@ function autenticar(req, res) {
   }
 }
 
+// Função para listar todos os usuários
 function listar(req, res) {
   usuarioModel.listar()
     .then(resultado => {
@@ -60,28 +63,62 @@ function listar(req, res) {
     });
 }
 
-var usuarioModel = require("../models/usuarioModel");
+// Função para pegar distribuição dos perfis de usuários
+function pegarDistribuicaoPerfil(req, res) {
+  usuarioModel.pegarDistribuicaoPerfil()
+    .then(resultado => {
+      res.status(200).json(resultado);
+    })
+    .catch(erro => {
+      console.log("Erro ao buscar distribuição dos perfis:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
+
+}
 
 function salvarRespostasQuiz(req, res) {
-    var usuarioId = req.body.usuarioId;
-    var pontuacao = req.body.pontuacao;
-    var certas = req.body.certas;
-    var erradas = req.body.erradas;
+  var usuarioId = req.body.usuarioId;
+  var pontuacao = req.body.pontuacao;
+  var total_perguntas = req.body.total_perguntas;
+  var percentual = req.body.percentual;
+  var respostas = req.body.respostas; 
 
-    usuarioModel.salvarRespostasQuiz(usuarioId, pontuacao, certas, erradas)
-        .then(function(resultado) {
-            res.json(resultado);
-        })
-        .catch(function(erro) {
-            console.log(erro);
-            console.log("\nHouve um erro ao salvar as respostas do quiz! Erro: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
+  usuarioModel.salvarResultadoQuiz(usuarioId, pontuacao, total_perguntas, percentual)
+    .then(resultado => {
+      const quizResultadoId = resultado.insertId;
+
+      const promessasRespostas = respostas.map(resposta => {
+        return usuarioModel.salvarRespostaQuiz(quizResultadoId, resposta.perguntaId, resposta.resposta);
+      });
+
+      return Promise.all(promessasRespostas);
+    })
+    .then(() => {
+      res.status(201).json({ message: "Respostas e resultado salvos com sucesso!" });
+    })
+    .catch(erro => {
+      console.log("Erro ao salvar respostas do quiz:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
+}
+
+// Função para pegar desempenho dos usuários
+function pegarDesempenhoUsuarios(req, res) {
+  usuarioModel.pegarDesempenhoUsuarios()
+    .then(resultado => {
+      res.status(200).json(resultado);
+    })
+    .catch(erro => {
+      console.log("Erro ao buscar desempenho dos usuários:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
 }
 
 module.exports = {
   cadastrar,
   autenticar,
   listar,
-  salvarRespostasQuiz
+  salvarRespostasQuiz,
+  pegarDistribuicaoPerfil,
+  pegarDesempenhoUsuarios,
 };

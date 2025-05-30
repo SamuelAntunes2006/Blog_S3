@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/style/quiz.css">
+  <link rel="stylesheet" href="quiz.css">
  <title>Quiz de Investimentos</title>
 </head>
 <body>
@@ -13,8 +13,9 @@
       <h1 class="titulo">[S]³</h1>
       <nav class="navbar">
         <ul>
-          <li><a href="/public/simulador.html">Simulador</a></li>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="simulador.html">Simulador</a></li>
+          <li><a href="index.html">Sair</a></li>
+          <li><a href="dashboard.html">Dados</a></li>
         </ul>
       </nav>
     </div>
@@ -34,6 +35,7 @@
     <div class="finish">
       <span></span>
       <button>Reiniciar</button>
+      <link rel="stylesheet" href="dashboard.html">
     </div>
   </main>
   <footer>
@@ -41,8 +43,9 @@
     <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
   </footer>
   <script>
-    // Quiz questions
-    const questions = [
+  
+    const questions  = [
+
     {
     question: "O que é investir?",
     answers: [
@@ -88,6 +91,8 @@
     // Quiz variables
     let currentQuestion = 0;
     let correctAnswers = 0;
+    let respostasDadas = [];  
+
 
     // DOM elements
     const spnQtd = document.querySelector(".spnQtd");
@@ -99,55 +104,91 @@
 
     // Initialize quiz
     function init() {
-      spnQtd.innerHTML = `${currentQuestion + 1}/${questions.length}`;
+      spnQtd.innerHTML = `${currentQuestion + 1}/${questions .length}`;
       loadQuestion();
     }
 
     // Load question
     function loadQuestion() {
-      const question = questions[currentQuestion];
+      const question = questions [currentQuestion];
       questionElement.innerHTML = question.question;
       
       answersElement.innerHTML = "";
-      question.answers.forEach(answer => {
+          question.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.option;
-        button.addEventListener("click", () => selectAnswer(answer.correct));
-        answersElement.appendChild(button);
-      });
-    }
+         button.addEventListener("click", () => selectAnswer(answer.correct, answer.option, currentQuestion));
+       answersElement.appendChild(button);
+});   };
+    
 
-    // Select answer
-    function selectAnswer(correct) {
-      if (correct) {
-        correctAnswers++;
-      }
-      
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        init();
-      } else {
-        finish();
-      }
-    }
 
-    // Finish quiz
-    function finish() {
-      const percentage = Math.round((correctAnswers / questions.length) * 100);
-      let message = "";
-      
-      if (percentage >= 80) {
-        message = `Parabéns! Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Excelente conhecimento sobre investimentos!`;
-      } else if (percentage >= 50) {
-        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Bom resultado, mas pode melhorar!`;
-      } else {
-        message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Recomendamos estudar mais sobre investimentos.`;
-      }
-      
-      finishSpan.innerHTML = message;
-      document.querySelector(".content").style.display = "none";
-      finishElement.style.display = "flex";
-    }
+    function selectAnswer(correct, selectedOption, questionIndex) {
+  
+    respostasDadas.push({
+    pergunta: questionIndex + 1,
+    resposta: selectedOption
+  });
+
+  if (correct) correctAnswers++;
+
+  currentQuestion++;
+  if (currentQuestion < questions .length) {
+    init();
+  } else {
+    finish();
+  }
+}
+
+function finish() {
+  const percentage = Math.round((correctAnswers / questions .length) * 100);
+  let message = "";
+
+  if (percentage >= 80) {
+    message = `Parabéns! Você acertou ${correctAnswers} de ${questions .length} (${percentage}%). Excelente conhecimento sobre investimentos!`;
+  } else if (percentage >= 50) {
+    message = `Você acertou ${correctAnswers} de ${questions .length} (${percentage}%). Bom resultado, mas pode melhorar!`;
+  } else {
+    message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Recomendamos estudar mais sobre investimentos.`;
+  }
+
+  finishSpan.innerHTML = message;
+  document.querySelector(".content").style.display = "none";
+  finishElement.style.display = "flex";
+
+
+  const fkusuario_id = sessionStorage.getItem('ID_USUARIO');
+
+  if (!fkusuario_id) {
+    console.log("Usuário não identificado. Não será possível salvar o resultado.");
+    return; 
+  }
+
+  fetch('/api/salvar-respostas-quiz', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    fkusuario_id: fkusuario_id,
+    acertos: correctAnswers,
+    totalPerguntas: questions .length,
+    percentual: percentage,
+    respostas: respostasDadas
+  })
+
+})
+  .then(res => {
+    if (!res.ok) return res.text().then(text => { throw new Error(text) });
+    return res.json();
+  })
+  .then(data => {
+    console.log('Resultado enviado com sucesso:', data);
+  })
+  .catch(err => {
+    console.error('Falha ao enviar resultado:', err);
+  });
+}
 
     // Restart quiz
     finishButton.addEventListener("click", () => {

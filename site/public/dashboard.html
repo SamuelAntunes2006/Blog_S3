@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="dashboards.css" />
+  <link rel="stylesheet" href="quiz.css" />
+  <title>Quiz de Investimentos - Dashboard</title>
+</head>
+<body>
+  <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+      <nav class="navbar">
+        <ul>
+          <li><a href="simulador.html">Simulador</a></li>
+          <li><a href="index.html">Sair</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="tituloheader">
+      <h2>Dados do Site!</h2>
+    </div>
+  </header>
+
+ <div class="layout-flex2">
+  <div class="grafico-box2">
+    <section>
+      <h3>Desempenho dos Usuários</h3>
+      <canvas id="graficoDesempenho"></canvas>
+    </section>
+  </div>
+  <div class="grafico-box2">
+    <section>
+      <h3>Distribuição dos Perfis</h3>
+      <canvas id="graficoPerfil"></canvas>
+    </section>
+  </div>
+
+<div class="resumo-dashboard">
+  <h3>Resumo Geral</h3>
+  <p><strong>Total de Usuários:</strong> <span id="totalUsuarios">Carregando...</span></p>
+  <p><strong>Média Geral de Acertos (%):</strong> <span id="mediaGeralAcertos">Carregando...</span></p>
+</div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+
+    fetch('/usuarios/desempenho-usuarios')
+  .then(response => response.json())
+  .then(data => {
+    const nomes = data.map(d => d.nome_completo);
+    const percentuais = data.map(d => d.media_percentual);
+    new Chart(document.getElementById('graficoDesempenho'), {
+      type: 'bar',
+      data: {
+        labels: nomes,
+        datasets: [{
+          label: 'Percentual de acertos (%)',
+          data: percentuais,
+          backgroundColor: 'rgba(75, 192, 192, 0.7)'
+        }]
+      },
+      options: {
+        indexAxis: 'y', 
+        responsive: true,
+        scales: {
+          x: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  });
+
+    fetch('/usuarios/perfil-distribuicao')    
+      .then(response => response.json())
+      .then(data => {
+        const perfis = data.map(d => d.perfil);
+        const totais = data.map(d => d.total);
+
+        new Chart(document.getElementById('graficoPerfil'), {
+          type: 'pie',
+          data: {
+            labels: perfis,
+            datasets: [{
+              label: 'Distribuição dos Perfis',
+              data: totais,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',   
+                'rgba(54, 162, 235, 0.6)',   
+                'rgba(255, 206, 86, 0.6)'    
+              ]
+            }]
+          },
+          options: {
+            responsive: true
+          }
+        });
+      });
+
+    // Buscar total de usuários e média geral de acertos
+    Promise.all([
+      fetch('/usuarios/perfil-distribuicao').then(res => res.json()),
+      fetch('/usuarios/desempenho-usuarios').then(res => res.json())
+    ])
+    .then(([perfilData, desempenhoData]) => {
+      const totalUsuarios = perfilData.reduce((acc, item) => acc + item.total, 0);
+      document.getElementById('totalUsuarios').textContent = totalUsuarios;
+
+      if (desempenhoData.length > 0) {
+        const somaPercentuais = desempenhoData.reduce((acc, item) => acc + parseFloat(item.media_percentual), 0);
+        const mediaGeral = (somaPercentuais / desempenhoData.length).toFixed(2);
+        document.getElementById('mediaGeralAcertos').textContent = mediaGeral + '%';
+      } else {
+        document.getElementById('mediaGeralAcertos').textContent = 'Sem dados';
+      }
+    })
+    .catch(erro => {
+      document.getElementById('totalUsuarios').textContent = 'Erro ao carregar';
+      document.getElementById('mediaGeralAcertos').textContent = 'Erro ao carregar';
+      console.error('Erro no resumo da dashboard:', erro);
+    });
+
+  </script>
+</body>
+</html>

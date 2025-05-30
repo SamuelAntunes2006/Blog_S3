@@ -202,3 +202,24 @@
         padding: 15px;
       }
     }
+
+    .layout-flex2 {
+  display: flex;
+  gap: 30px;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  margin-top: 50px; /* margem superior para "descer" o container todo */
+}
+
+.grafico-box2 {
+  background-color: black;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  flex: 1 1 400px;
+  max-width: 500px;
+  color: yellow
+  /* margem superior individual (se quiser mais espaço entre o topo do box e o container) */
+}
