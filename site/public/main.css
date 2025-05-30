@@ -77,6 +77,26 @@ body {
   transition: 0.3s ease;
 }
 
+.alerta_erro {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card_erro {
+    display: none; /* Oculto inicialmente */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: 'Barlow', sans-serif;
+}
+
+
 .navbar a:hover {
   background-color: #ffcc00;
   color: #000;
@@ -259,7 +279,7 @@ body {
   gap: 20px;
   margin-bottom: 40px;
   justify-content: center;
-  background-color: #1c1c1c;
+  background-color: #2d2d44;
   padding: 30px;
   border-radius: 15px;
 }
@@ -275,14 +295,27 @@ body {
 
 .tipos {
   margin-bottom: 50px;
-  background-color:grey;
+  background-color:#2d2d44;
   padding: 30px;
   border-radius: 15px;
 }
+.video_style{
+  display:flex;
+        align-content: center;
+        width: 100%; 
+        height: 500px; 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; 
+            border: 5px solid yellow;  
+            border-radius: 30px; 
+            box-shadow: 0 5px 8px rgba(0,0,0,0.3);
+    
+}
 
-.tipos.p :hover{
-     transform: scale(1.1);
-     background-color: #000;
+.tipos p:hover {
+  transform: scale(1.1);
+  background-color: #000;
 }
 
 
@@ -313,6 +346,76 @@ body {
   border-radius: 8px;
   object-fit: cover;
 }
+.tipos {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tipos h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+.tipos p {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    line-height: 1.6;
+}
+
+.tipos img {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Dica e chamada para ação */
+.dica {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #2c3e50;
+    color: #fff;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.dica p {
+    
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.dica img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.dica a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.dica a:hover {
+    background-color: #d35400;
+}
 
 .titulo-investidores {
   text-align: center;
@@ -324,7 +427,7 @@ body {
 .investidores {
   display: flex;
   justify-content: space-around;
-  background: gray;
+  background: #2d2d44;
   gap: 20px;
   border-radius: 15px;
   width: 100%;

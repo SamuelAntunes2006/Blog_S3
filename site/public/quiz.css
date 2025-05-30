@@ -1,225 +1,196 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Barlow:wght@400;500;600&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Barlow', 'Poppins', sans-serif;
-    }
-
-    body {
-      background: #003366;
-      color: white;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header2 {
-      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                      url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      border-bottom: 5px solid #ffcc00;
-      padding: 30px;
-      height: 250px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .cabecalho {
-      width: 100%;
-      text-align: center;
-    }
-
-    .titulo {
-      font-size: 3rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-      margin-bottom: 20px;
-    }
-
-    .navbar ul {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .navbar a {
-      color: #ffcc00;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 8px 14px;
-      border-radius: 8px;
-      transition: 0.3s ease;
-    }
-
-    .navbar a:hover {
-      background-color: #ffcc00;
-      color: #000;
-    }
-
-    .tituloheader h2 {
-      font-size: 2rem;
-      font-weight: bold;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    main {
-      background-color: white;
-      padding: 20px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 500px;
-      min-height: 300px;
-      margin: 30px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #333;
-    }
-
-    h2 {
-      text-align: center;
-      margin-top: 20px;
-      color: white;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 15px;
-    }
-
-    .spnQtd {
-      text-align: right;
-      font-weight: bold;
-      color: #666;
-    }
-
-    .question {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-
-    .answers {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .answers button {
-      width: 100%;
-      text-align: left;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background-color: #008CCC;
-      color: white;
-      font-size: 1rem;
-      transition: background-color 0.3s;
-    }
-
-    .answers button:hover {
-      background-color: #006699;
-    }
-
-    .finish {
-      display: none;
-      flex-direction: column;
-      gap: 15px;
-      text-align: center;
-    }
-
-    .finish span {
-      font-size: 1.2rem;
-      font-weight: 500;
-    }
-
-    .finish button {
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background-color: #0d0d0d;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: background-color 0.3s;
-    }
-
-    .finish button:hover {
-      background-color: #222;
-    }
-
-    footer {
-      background-color: #001f3f;
-      color: #ccc;
-      text-align: center;
-      padding: 20px;
-      margin-top: auto;
-    }
-
-    footer a {
-      color: #ffcc00;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .header2 {
-        height: auto;
-        padding: 20px;
-      }
-      
-      .titulo {
-        font-size: 2rem;
-      }
-      
-      .tituloheader h2 {
-        font-size: 1.5rem;
-      }
-      
-      main {
-        width: 95%;
-        padding: 15px;
-      }
-    }
-
-    .layout-flex2 {
-  display: flex;
-  gap: 30px;
-  justify-content: center; /* centraliza horizontalmente */
-  align-items: flex-start;
-  flex-wrap: wrap;
-  padding: 40px 20px;
-  margin-top: 50px; /* margem superior para "descer" o container todo */
+/* Reset básico e fonte */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Barlow', 'Poppins', sans-serif;
 }
 
-.grafico-box2 {
+/* Corpo da página */
+body {
+  background: #003366;
+  color: white;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho com imagem e sombra */
+.header2 {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                    url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border-bottom: 5px solid #ffcc00;
+  padding: 30px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Título principal */
+.titulo {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+  margin-bottom: 20px;
+}
+
+/* Menu de navegação */
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.navbar a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: rgba(0,0,0,0.5);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+/* Título secundário no header */
+.tituloheader h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Área principal do quiz */
+main {
   background-color: black;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  flex: 1 1 400px;
+  border-radius: 20px;
+  width: 90%;
   max-width: 500px;
-  color: yellow
-  /* margem superior individual (se quiser mais espaço entre o topo do box e o container) */
+  min-height: 300px;
+  margin: 30px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
+
+/* Texto do título */
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #FFFFFF;
+  border-bottom: 2px solid;
+}
+
+/* Container das perguntas e respostas */
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+/* Contador de perguntas (ex: 1/5) */
+.contador {
+  text-align: right;
+  font-weight: bold;
+  color: yellow;
+}
+
+/* Pergunta */
+.pergunta {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* Botões das respostas */
+.respostas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.respostas button {
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #6699cc;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.respostas button:hover {
+  background-color: #006699;
+}
+
+/* Tela de resultado final */
+.finalizar {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+  color: white;
+}
+
+.finalizar .mensagem {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.finalizar button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #0d0d0d;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.finalizar button:hover {
+  background-color: #222;
+}
+
+/* Rodapé */
+footer {
+  background-color: #001f3f;
+  color: #ccc;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+}
+
+footer a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+

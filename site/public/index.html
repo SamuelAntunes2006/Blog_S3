@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,20 +20,38 @@
                 <ul>
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="index.html">Início</a></li>
+                    <li><a href="dicas.html">Dicas</a></li>
             
                 </ul>
             </nav>
         </div>    
     </header>
-  
+    
      <main class="container">
+
+     <div id="video_style" >
+        <video 
+            src="/public/assets/Design sem nome.mp4" 
+            style="
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; 
+            border: 5px solid yellow;  
+            border-radius: 30px; 
+            box-shadow: 0 5px 8px rgba(0,0,0,0.3);
+            "
+            controls
+        >
+            Bem-Vindo ao Blog [S]³
+        </video>
+        </div
+    </main>
+
         <main class="primeiraSessao">
         <div class="intro">
             <p>Aqui você encontra conteúdos simples e diretos sobre investimentos. Aproveite nosso simulador e um Quiz exclusivo para testar seus conhecimentos, é gratuito, mas é necessário se cadastrar para usar. Comece hoje mesmo!</p>
             <br>
                 <a href="./cadastro.html" class="btn-cta">Cadastre-se Gratuitamente</a>
-
-                
         </div>
         <h2 class="destaque">[S]³: Primeiros Passos para Invesitir o seu dinheiro<h2></h2>
         <br>
@@ -110,7 +127,7 @@
 </div>
         <br><br>
         <div class="conteudo">
-        <h2>Como Investir e Encontrar o Melhor Investimento para Você</h2>
+        <h1>Como Investir e Encontrar o Melhor Investimento para Você</h1>
         <div class="Ensino">
             <br>
             <p>
@@ -122,65 +139,16 @@
                 Compare taxas, prazos e riscos. 
         
                 <br><br>
-                O melhor investimento é aquele que se encaixa nos seus objetivos e no seu momento de vida.
+                <h3>O melhor investimento é aquele que se encaixa nos seus objetivos e no seu momento de vida.</h3>
                 </p>
             </div><br><br>
             </div>
 
-        <h2>Se você gostou do nosso conteúdo e deseja se aprofundar: </h2>
-        <div class="dica">
-            
-            <p>
-             A [B]³ tem uma plataforma de cursos chamada <strong>[B]³ Educação</strong>, repleta de conteúdos incríveis para o seu desenvolvimento.
-            </p>
-            <img src="https://iuploads.scribblecdn.net/db6eb3eb-ac39-4c4c-aab0-d5934b457e0f/global/imagelib/uncategorized/logo-com-fundo.png?v=12232022175112"  alt="Logo B³">
-            <br>
-            <a href="https://edu.b3.com.br/" style="color:white">Acesse o site</a>
-    
-        </div>        
+         
     </main>
     <footer>
         <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
         <p><a href="samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
-      
-    </footer>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+</footer>
 </body>
 </html>

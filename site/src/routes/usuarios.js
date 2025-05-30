@@ -13,8 +13,6 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
-router.get("/respostas-detalhadas/:usuarioId", usuarioController.pegarRespostasDetalhadas);
-
 
 // Rotas para os gráficos
 router.get("/perfil-distribuicao", usuarioController.pegarDistribuicaoPerfil);

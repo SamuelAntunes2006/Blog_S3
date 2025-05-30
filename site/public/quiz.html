@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="quiz.css">
- <title>Quiz de Investimentos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Investimentos</title>
+  <link rel="stylesheet" href="quiz.css" />
 </head>
 <body>
   <header class="header2">
@@ -23,184 +22,169 @@
       <h2>Quiz de Investimentos!</h2>
     </div>
   </header>
-  
+
   <h2>Teste seus conhecimentos</h2>
-  
+
   <main>
     <div class="content">
-      <span class="spnQtd"></span>
-      <span class="question"></span>
-      <div class="answers"></div>
+      <span class="contador"></span>
+      <p class="pergunta"></p>
+      <div class="respostas"></div>
     </div>
-    <div class="finish">
-      <span></span>
-      <button>Reiniciar</button>
-      <link rel="stylesheet" href="dashboard.html">
+
+    <div class="finalizar" style="display:none;">
+      <p class="mensagem"></p>
+      <br>
+      <button onclick="Reiniciar()">Reiniciar</button>
+      <br><br> 
+      <a href="dashboard.html">Dados</a>
     </div>
   </main>
+
   <footer>
     <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
     <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
   </footer>
-  <script>
-  
-    const questions  = [
 
-    {
-    question: "O que é investir?",
-    answers: [
-      { option: "Gastar dinheiro sem preocupação de retorno", correct: false },
-      { option: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo", correct: true },
-      { option: "Guardar dinheiro sem gerar retorno", correct: false },
-    ],
-  },
-  {
-    question: "O que é Tesouro Direto?",
-    answers: [
-      { option: "Um investimento em imóveis", correct: false },
-      { option: "Um título do governo", correct: true },
-      { option: "Uma ação de empresa privada", correct: false },
-    ],
-  },
-  {
-    question: "O que é CDB?",
-    answers: [
-      { option: "Um título do governo", correct: false },
-      { option: "Um investimento em ações", correct: false },
-      { option: "Um título bancário", correct: true },
-    ],
-  },
-  {
-    question: "O que significa 'rentabilidade' em investimentos??",
-    answers: [
-      { option: "Previsibilidade de retorno", correct: false },
-      { option: "Rendimento fixo com baixo risco", correct: false },
-      { option: "Ganhos ou perdas dependem do desempenho do mercado", correct: true },
-    ],
-  },
-   {
-    question: "Como o blog sugere que o investidor escolha o melhor investimento?",
-    answers: [
-      { option: "De acordo com suas metas e tolerância ao risco", correct: true },
-      { option: "Somente considerando o retorno financeiro", correct: false },
-      { option: "De acordo com o tanto de dinheiro que você tem", correct: false },
-    ],
-  },
+  <script>
+    const perguntas = [
+      {
+        pergunta: "O que é investir?",
+        respostas: [
+          { texto: "Gastar dinheiro sem preocupação de retorno", correta: false },
+          { texto: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo", correta: true },
+          { texto: "Guardar dinheiro sem gerar retorno", correta: false },
+        ],
+      },
+      {
+        pergunta: "O que é Tesouro Direto?",
+        respostas: [
+          { texto: "Um investimento em imóveis", correta: false },
+          { texto: "Um título do governo", correta: true },
+          { texto: "Uma ação de empresa privada", correta: false },
+        ],
+      },
+      {
+        pergunta: "O que é CDB?",
+        respostas: [
+          { texto: "Um título do governo", correta: false },
+          { texto: "Um investimento em ações", correta: false },
+          { texto: "Um título bancário", correta: true },
+        ],
+      },
+      {
+        pergunta: "O que significa 'rentabilidade' em investimentos?",
+        respostas: [
+          { texto: "Previsibilidade de retorno", correta: false },
+          { texto: "Rendimento fixo com baixo risco", correta: false },
+          { texto: "Ganhos ou perdas dependem do desempenho do mercado", correta: true },
+        ],
+      },
+      {
+        pergunta: "Como o blog sugere que o investidor escolha o melhor investimento?",
+        respostas: [
+          { texto: "De acordo com suas metas e tolerância ao risco", correta: true },
+          { texto: "Somente considerando o retorno financeiro", correta: false },
+          { texto: "De acordo com o tanto de dinheiro que você tem", correta: false },
+        ],
+      },
     ];
 
-    // Quiz variables
-    let currentQuestion = 0;
-    let correctAnswers = 0;
-    let respostasDadas = [];  
+    let indiceAtual = 0;
+    let acertos = 0;
+    let respostasDados = [];
 
+    const contadorEl = document.querySelector(".contador");
+    const perguntaEl = document.querySelector(".pergunta");
+    const respostasEl = document.querySelector(".respostas");
+    const finalizarEl = document.querySelector(".finalizar");
+    const mensagemEl = document.querySelector(".mensagem");
+    const btnReiniciar = finalizarEl.querySelector("button");
+    const conteudoEl = document.querySelector(".content");
 
-    // DOM elements
-    const spnQtd = document.querySelector(".spnQtd");
-    const questionElement = document.querySelector(".question");
-    const answersElement = document.querySelector(".answers");
-    const finishElement = document.querySelector(".finish");
-    const finishSpan = document.querySelector(".finish span");
-    const finishButton = document.querySelector(".finish button");
+    function mostrarPergunta() {
+      const atual = perguntas[indiceAtual];
 
-    // Initialize quiz
-    function init() {
-      spnQtd.innerHTML = `${currentQuestion + 1}/${questions .length}`;
-      loadQuestion();
+      contadorEl.textContent = `${indiceAtual + 1} / ${perguntas.length}`;
+      perguntaEl.textContent = atual.pergunta;
+
+      respostasEl.innerHTML = "";
+      atual.respostas.forEach((resposta) => {
+        const btn = document.createElement("button");
+        btn.textContent = resposta.texto;
+        btn.onclick = () => escolherResposta(resposta);
+        respostasEl.appendChild(btn);
+      });
     }
 
-    // Load question
-    function loadQuestion() {
-      const question = questions [currentQuestion];
-      questionElement.innerHTML = question.question;
-      
-      answersElement.innerHTML = "";
-          question.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.innerHTML = answer.option;
-         button.addEventListener("click", () => selectAnswer(answer.correct, answer.option, currentQuestion));
-       answersElement.appendChild(button);
-});   };
-    
+    function escolherResposta(resposta) {
+      respostasDados.push({
+        pergunta: indiceAtual + 1,
+        resposta: resposta.texto,
+      });
 
+      if (resposta.correta) acertos++;
 
-    function selectAnswer(correct, selectedOption, questionIndex) {
+      indiceAtual++;
+      if (indiceAtual < perguntas.length) {
+        mostrarPergunta();
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      const percentual = Math.round((acertos / perguntas.length) * 100);
+      let texto = "";
+
+      if (percentual >= 80) {
+        texto = `Parabéns! Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Excelente conhecimento!`;
+      } else if (percentual >= 50) {
+        texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Bom resultado, mas pode melhorar.`;
+      } else {
+        texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Recomendamos estudar mais.`;
+      }
+
+      mensagemEl.textContent = texto;
+      conteudoEl.style.display = "none";
+      finalizarEl.style.display = "block";
+
+      // Enviar resultados ao servidor
+      const idUsuario = sessionStorage.getItem("ID_USUARIO");
+      if (!idUsuario) {
+        console.log("Usuário não identificado, não será possível salvar resultado.");
+        return;
+      }
+
+      fetch("/api/salvar-respostas-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fkusuario_id: idUsuario,
+          acertos: acertos,
+          totalPerguntas: perguntas.length,
+          percentual: percentual,
+          respostas: respostasDados,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) return res.text().then((t) => { throw new Error(t) });
+          return res.json();
+        })
+        .then((data) => console.log("Resultado enviado com sucesso:", data))
+        .catch((erro) => console.error("Erro ao enviar resultado:", erro));
+    }
+    function Reiniciar(){
   
-    respostasDadas.push({
-    pergunta: questionIndex + 1,
-    resposta: selectedOption
-  });
-
-  if (correct) correctAnswers++;
-
-  currentQuestion++;
-  if (currentQuestion < questions .length) {
-    init();
-  } else {
-    finish();
-  }
-}
-
-function finish() {
-  const percentage = Math.round((correctAnswers / questions .length) * 100);
-  let message = "";
-
-  if (percentage >= 80) {
-    message = `Parabéns! Você acertou ${correctAnswers} de ${questions .length} (${percentage}%). Excelente conhecimento sobre investimentos!`;
-  } else if (percentage >= 50) {
-    message = `Você acertou ${correctAnswers} de ${questions .length} (${percentage}%). Bom resultado, mas pode melhorar!`;
-  } else {
-    message = `Você acertou ${correctAnswers} de ${questions.length} (${percentage}%). Recomendamos estudar mais sobre investimentos.`;
-  }
-
-  finishSpan.innerHTML = message;
-  document.querySelector(".content").style.display = "none";
-  finishElement.style.display = "flex";
-
-
-  const fkusuario_id = sessionStorage.getItem('ID_USUARIO');
-
-  if (!fkusuario_id) {
-    console.log("Usuário não identificado. Não será possível salvar o resultado.");
-    return; 
-  }
-
-  fetch('/api/salvar-respostas-quiz', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-    fkusuario_id: fkusuario_id,
-    acertos: correctAnswers,
-    totalPerguntas: questions .length,
-    percentual: percentage,
-    respostas: respostasDadas
-  })
-
-})
-  .then(res => {
-    if (!res.ok) return res.text().then(text => { throw new Error(text) });
-    return res.json();
-  })
-  .then(data => {
-    console.log('Resultado enviado com sucesso:', data);
-  })
-  .catch(err => {
-    console.error('Falha ao enviar resultado:', err);
-  });
-}
-
-    // Restart quiz
-    finishButton.addEventListener("click", () => {
-      currentQuestion = 0;
-      correctAnswers = 0;
-      document.querySelector(".content").style.display = "flex";
-      finishElement.style.display = "none";
-      init();
-    });
-
-    // Start quiz
-    init();
+      indiceAtual = 0;
+      acertos = 0;
+      respostasDados = [];
+      conteudoEl.style.display = "block";
+      finalizarEl.style.display = "none";
+      mostrarPergunta();
+    };
+  
+    mostrarPergunta();
   </script>
 </body>
 </html>

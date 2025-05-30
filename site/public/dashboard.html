@@ -47,80 +47,90 @@
 </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    // Buscar dados de perfis
+fetch('/usuarios/perfil-distribuicao')
+  .then(res => res.json())
+  .then(perfilData => {
+    const perfis = [];
+    const totais = [];
+    let totalUsuarios = 0;
 
-    fetch('/usuarios/desempenho-usuarios')
-  .then(response => response.json())
-  .then(data => {
-    const nomes = data.map(d => d.nome_completo);
-    const percentuais = data.map(d => d.media_percentual);
+    for (let i = 0; i < perfilData.length; i++) {
+      perfis.push(perfilData[i].perfil);
+      totais.push(perfilData[i].total);
+      totalUsuarios += perfilData[i].total;
+    }
+
+    // Atualiza total de usuários
+    document.getElementById('totalUsuarios').textContent = totalUsuarios;
+
+    // Cria gráfico de perfis
+    new Chart(document.getElementById('graficoPerfil'), {
+      type: 'pie',
+      data: {
+        labels: perfis,
+        datasets: [{
+          data: totais,
+          backgroundColor: [
+            '4FC3F7',
+            '#81C784',
+            '#BA68C8'
+          ]
+        }]
+      },
+      options: { responsive: true }
+    });
+  })
+  .catch(() => {
+    document.getElementById('totalUsuarios').textContent = 'Erro ao carregar';
+  });
+
+// Buscar dados de desempenho
+fetch('/usuarios/desempenho-usuarios')
+  .then(res => res.json())
+  .then(desempenhoData => {
+    const nomes = [];
+    const percentuais = [];
+    let soma = 0;
+
+    for (let i = 0; i < desempenhoData.length; i++) {
+      nomes.push(desempenhoData[i].nome_completo);
+      const val = parseFloat(desempenhoData[i].media_percentual);
+      percentuais.push(val);
+      soma += val;
+    }
+
+    // Atualiza média geral
+    if (desempenhoData.length > 0) {
+      const media = (soma / desempenhoData.length).toFixed(2) + '%';
+      document.getElementById('mediaGeralAcertos').textContent = media;
+    } else {
+      document.getElementById('mediaGeralAcertos').textContent = 'Sem dados';
+    }
+
+    // Cria gráfico de desempenho
     new Chart(document.getElementById('graficoDesempenho'), {
       type: 'bar',
       data: {
         labels: nomes,
         datasets: [{
-          label: 'Percentual de acertos (%)',
+          label: 'Acertos (%)',
           data: percentuais,
-          backgroundColor: 'rgba(75, 192, 192, 0.7)'
+          backgroundColor: '#42A5F5',
+          bordercolor:'1E88E5',
+          
         }]
       },
       options: {
-        indexAxis: 'y', 
-        responsive: true,
-        scales: {
-          x: { beginAtZero: true, max: 100 }
-        }
+        indexAxis: 'y',
+        scales: { x: { beginAtZero: true, max: 100 } },
+        responsive: true
       }
     });
+  })
+  .catch(() => {
+    document.getElementById('mediaGeralAcertos').textContent = 'Erro ao carregar';
   });
-
-    fetch('/usuarios/perfil-distribuicao')    
-      .then(response => response.json())
-      .then(data => {
-        const perfis = data.map(d => d.perfil);
-        const totais = data.map(d => d.total);
-
-        new Chart(document.getElementById('graficoPerfil'), {
-          type: 'pie',
-          data: {
-            labels: perfis,
-            datasets: [{
-              label: 'Distribuição dos Perfis',
-              data: totais,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.6)',   
-                'rgba(54, 162, 235, 0.6)',   
-                'rgba(255, 206, 86, 0.6)'    
-              ]
-            }]
-          },
-          options: {
-            responsive: true
-          }
-        });
-      });
-
-    // Buscar total de usuários e média geral de acertos
-    Promise.all([
-      fetch('/usuarios/perfil-distribuicao').then(res => res.json()),
-      fetch('/usuarios/desempenho-usuarios').then(res => res.json())
-    ])
-    .then(([perfilData, desempenhoData]) => {
-      const totalUsuarios = perfilData.reduce((acc, item) => acc + item.total, 0);
-      document.getElementById('totalUsuarios').textContent = totalUsuarios;
-
-      if (desempenhoData.length > 0) {
-        const somaPercentuais = desempenhoData.reduce((acc, item) => acc + parseFloat(item.media_percentual), 0);
-        const mediaGeral = (somaPercentuais / desempenhoData.length).toFixed(2);
-        document.getElementById('mediaGeralAcertos').textContent = mediaGeral + '%';
-      } else {
-        document.getElementById('mediaGeralAcertos').textContent = 'Sem dados';
-      }
-    })
-    .catch(erro => {
-      document.getElementById('totalUsuarios').textContent = 'Erro ao carregar';
-      document.getElementById('mediaGeralAcertos').textContent = 'Erro ao carregar';
-      console.error('Erro no resumo da dashboard:', erro);
-    });
 
   </script>
 </body>

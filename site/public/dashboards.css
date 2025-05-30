@@ -60,9 +60,30 @@
 
     .resumo-dashboard{
         padding: 20px; 
-      background: black;
+      background: #2d2d44;
         margin: 20px auto;
           max-width: 600px;
           border-radius: 8px;
             color: white;
     }
+
+    
+    .layout-flex2 {
+  display: flex;
+  gap: 30px;
+  justify-content: center; 
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  margin-top: 50px; 
+}
+
+.grafico-box2 {
+  background-color: #2d2d44;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  flex: 1 1 400px;
+  max-width: 500px;
+  color: white;
+}
