@@ -13,7 +13,7 @@
       <nav class="navbar">
         <ul>
           <li><a href="simulador.html">Simulador</a></li>
-          <li><a href="index.html">Sair</a></li>
+          <li><a href="navegacao.html">Sair</a></li>
           <li><a href="dashboard.html">Dados</a></li>
         </ul>
       </nav>
@@ -49,6 +49,7 @@
   <script>
     const perguntas = [
       {
+        id: 1,
         pergunta: "O que é investir?",
         respostas: [
           { texto: "Gastar dinheiro sem preocupação de retorno", correta: false },
@@ -57,6 +58,7 @@
         ],
       },
       {
+        id: 2,
         pergunta: "O que é Tesouro Direto?",
         respostas: [
           { texto: "Um investimento em imóveis", correta: false },
@@ -65,6 +67,7 @@
         ],
       },
       {
+        id: 3,
         pergunta: "O que é CDB?",
         respostas: [
           { texto: "Um título do governo", correta: false },
@@ -73,6 +76,7 @@
         ],
       },
       {
+        id: 4,
         pergunta: "O que significa 'rentabilidade' em investimentos?",
         respostas: [
           { texto: "Previsibilidade de retorno", correta: false },
@@ -81,6 +85,7 @@
         ],
       },
       {
+        id: 5,
         pergunta: "Como o blog sugere que o investidor escolha o melhor investimento?",
         respostas: [
           { texto: "De acordo com suas metas e tolerância ao risco", correta: true },
@@ -103,36 +108,40 @@
     const conteudoEl = document.querySelector(".content");
 
     function mostrarPergunta() {
-      const atual = perguntas[indiceAtual];
+  const atual = perguntas[indiceAtual];
 
-      contadorEl.textContent = `${indiceAtual + 1} / ${perguntas.length}`;
-      perguntaEl.textContent = atual.pergunta;
+  contadorEl.textContent = `${indiceAtual + 1} / ${perguntas.length}`;
+  perguntaEl.textContent = atual.pergunta;
 
-      respostasEl.innerHTML = "";
-      atual.respostas.forEach((resposta) => {
-        const btn = document.createElement("button");
-        btn.textContent = resposta.texto;
-        btn.onclick = () => escolherResposta(resposta);
-        respostasEl.appendChild(btn);
-      });
-    }
+  respostasEl.innerHTML = "";
 
-    function escolherResposta(resposta) {
-      respostasDados.push({
-        pergunta: indiceAtual + 1,
-        resposta: resposta.texto,
-      });
+  const letras = ['a', 'b', 'c'];
 
-      if (resposta.correta) acertos++;
+  atual.respostas.forEach((resposta, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = `${letras[index]}) ${resposta.texto}`;
+    btn.onclick = () => escolherResposta(letras[index], resposta.correta, atual.id);
+    respostasEl.appendChild(btn);
+  });
+}
 
-      indiceAtual++;
-      if (indiceAtual < perguntas.length) {
-        mostrarPergunta();
-      } else {
-        mostrarResultado();
-      }
-    }
+function escolherResposta(letra, correta, idPergunta) {
+  respostasDados.push({
+    fkpergunta_id: idPergunta,
+    resposta: letra,
+    correta: correta ? 1 : 0,
+  });
 
+  if (correta) acertos++;
+
+  indiceAtual++;
+  if (indiceAtual < perguntas.length) {
+    mostrarPergunta();
+  } else {
+    mostrarResultado();
+  }
+}
+  
     function mostrarResultado() {
       const percentual = Math.round((acertos / perguntas.length) * 100);
       let texto = "";
@@ -149,30 +158,42 @@
       conteudoEl.style.display = "none";
       finalizarEl.style.display = "block";
 
-      // Enviar resultados ao servidor
       const idUsuario = sessionStorage.getItem("ID_USUARIO");
       if (!idUsuario) {
         console.log("Usuário não identificado, não será possível salvar resultado.");
         return;
       }
+            console.log("Enviando respostas para backend:", {
+            fkusuario_id: idUsuario,
+            acertos,
+            totalPerguntas: perguntas.length,
+            percentual,
+            respostas: respostasDados,
+              });
 
       fetch("/api/salvar-respostas-quiz", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fkusuario_id: idUsuario,
-          acertos: acertos,
-          totalPerguntas: perguntas.length,
-          percentual: percentual,
-          respostas: respostasDados,
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) return res.text().then((t) => { throw new Error(t) });
-          return res.json();
-        })
-        .then((data) => console.log("Resultado enviado com sucesso:", data))
-        .catch((erro) => console.error("Erro ao enviar resultado:", erro));
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    fkusuario_id: idUsuario,
+    acertos,
+    totalPerguntas: perguntas.length,
+    percentual,
+    respostas: respostasDados,
+  }),
+})
+  .then(async (res) => {
+    if (!res.ok) {
+      const texto = await res.text();
+      console.error("Resposta de erro do servidor:", texto);
+      throw new Error(texto);
+    }
+    return res.json();
+  })
+  .then((data) => console.log("Resultado enviado com sucesso:", data))
+  .catch((erro) => console.error("Erro ao enviar resultado:", erro));
+
+
     }
     function Reiniciar(){
   

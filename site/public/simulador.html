@@ -16,7 +16,7 @@
       <nav class="navbar">
         <ul>
           <li><a href="quiz.html">Quiz</a></li>
-          <li><a href="index.html">Sair</a></li>
+          <li><a href="navegacao.html">Sair</a></li>
           <li><a href="dashboard.html">Dados</a></li>
         </ul>
       </nav>
@@ -71,21 +71,36 @@
       let periodo = Number(ipt_periodo.value );
       let tipo = ipt_taxa.value;
 
+      if (isNaN(investimento) || isNaN(aporte) || isNaN(periodo) || !tipo) {
+      alert("Por favor, preencha todos os campos corretamente!");
+      return;
+      }
+
+
       let taxa = 0;
       if (tipo === "selic") taxa = 0.0015;
       if (tipo === "cdb") taxa = 0.01;
       if (tipo === "poupanca") taxa = 0.005;
 
+
       let valores = [];
       let total = investimento;
 
+
       for (let i = 0; i < periodo; i++) {
         total = (total + aporte) * (1 + taxa);
-        valores.push(total.toFixed(2));
+      valores.push(Number(total.toFixed(2))); // força número com 2 casas
       }
+
+
+    const valorInvestido = investimento + (aporte * periodo);
+    const lucro = Number(total.toFixed(2)) - valorInvestido;
+
+
 
       div_resultado.innerHTML = `
         <p>Valor final após ${periodo} meses: <strong>R$ ${total.toFixed(2)}</strong></p>
+        <p>Lucro obtido: <strong>R$ ${lucro.toFixed(2)}</strong></p>
       `;
       
       if (chartLinha) chartLinha.destroy();
@@ -113,23 +128,28 @@
       });
 
 
+
       if (chartBarra) chartBarra.destroy();
-      const ctx2 = document.getElementById('graficoBarra').getContext('2d');
-      chartBarra = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: ['Total Investido', 'Valor Final'],
-          datasets: [{
-            label: 'Comparativo em (R$)',
-            data: [investimento + (aporte * periodo), total],
-            backgroundColor: ['#888', '#ffcc00']
-          }]
-        },
-        options: {
-          responsive: true,
-          indexAxis: 'y'
-        }
-      });
+const ctx2 = document.getElementById('graficoBarra').getContext('2d');
+chartBarra = new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: ['Total Investido', 'Valor Final'],
+    datasets: [{
+      label: 'Comparativo em (R$)',
+      data: [
+        investimento + (aporte * periodo),
+        total,
+      ],
+      backgroundColor: ['#888', '#ffcc00', ]
+    }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: 'y'
+  }
+});
+
     }
   </script>
 </body>

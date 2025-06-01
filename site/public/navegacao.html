@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Investimentos</title>
+  <link rel="stylesheet" href="quiz.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header class="header2">
+    <div class="cabecalho cadastro-header">
+      <h1 class="titulo">[S]³</h1>
+    </div>
+    <div class="tituloheader">
+      <h2 id="mensagem_boas_vindas"></h2>
+    </div>
+  </header>
+
+<div class="navegacao-box">
+  <p>Escolha uma das opções abaixo:</p>
+  <nav class="navegacao-secundaria">
+    <ul>
+      <li><a href="simulador.html"><i class="fa-solid fa-calculator"></i> Simulador</a></li><br>
+      <li><a href="quiz.html"><i class="fa-solid fa-question"></i> Quiz</a></li><br>
+      <li><a href="dashboard.html"><i class="fa-solid fa-database"></i> Dados do Quiz</a></li><br>
+      <li><a href="#" onclick="sair()"><i class="fa-solid fa-sign-out-alt"></i> Sair</a></li>
+    </ul>
+  </nav>
+</div>
+
+  <script>
+    window.onload = function() {
+      var nomeUsuario = sessionStorage.NOME_USUARIO;
+      var mensagem = document.getElementById("mensagem_boas_vindas");
+      if (nomeUsuario) {
+        mensagem.innerText = "Bem-vindo, " + nomeUsuario + "! ";
+      } else {
+        mensagem.innerText = "Bem-vindo, Investidor!";
+      }
+    }
+
+    function sair() {
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

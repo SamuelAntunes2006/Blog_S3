@@ -15,7 +15,7 @@
       <nav class="navbar">
         <ul>
           <li><a href="simulador.html">Simulador</a></li>
-          <li><a href="index.html">Sair</a></li>
+          <li><a href="navegacao.html">Sair</a></li>
           <li><a href="quiz.html">Quiz</a></li>
         </ul>
       </nav>
@@ -25,113 +25,172 @@
     </div>
   </header>
 
- <div class="layout-flex2">
-  <div class="grafico-box2">
-    <section>
+  <main class="layout-dashboard">
+  <section class="resumo-dashboard">
+    <h3>Resumo Geral</h3>
+    <p><strong>Total de Usuários:</strong> <span id="totalUsuarios">Carregando...</span></p>
+    <p><strong>Média Geral de Acertos (%):</strong> <span id="mediaGeralAcertos">Carregando...</span></p>
+  </section>
+
+  <section class="graficos-dashboard">
+    <div class="grafico-box">
+      <h3>Seu Desempenho no Quiz</h3>
+      <canvas id="graficoAcertosErros"></canvas>
+    </div>
+
+    <div class="grafico-box">
       <h3>Desempenho dos Usuários</h3>
       <canvas id="graficoDesempenho"></canvas>
-    </section>
-  </div>
-  <div class="grafico-box2">
-    <section>
+    </div>
+
+    <div class="grafico-box">
       <h3>Distribuição dos Perfis</h3>
       <canvas id="graficoPerfil"></canvas>
-    </section>
+    </div>
+  </section>
+</main>
+
   </div>
 
-<div class="resumo-dashboard">
-  <h3>Resumo Geral</h3>
-  <p><strong>Total de Usuários:</strong> <span id="totalUsuarios">Carregando...</span></p>
-  <p><strong>Média Geral de Acertos (%):</strong> <span id="mediaGeralAcertos">Carregando...</span></p>
-</div>
-</div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Buscar dados de perfis
-fetch('/usuarios/perfil-distribuicao')
-  .then(res => res.json())
-  .then(perfilData => {
-    const perfis = [];
-    const totais = [];
-    let totalUsuarios = 0;
+    // ID do usuário logado, você pode ajustar conforme sua lógica de autenticação
+    const usuarioLogadoId = 1;
 
-    for (let i = 0; i < perfilData.length; i++) {
-      perfis.push(perfilData[i].perfil);
-      totais.push(perfilData[i].total);
-      totalUsuarios += perfilData[i].total;
+    // Função para carregar e exibir o gráfico de acertos e erros do usuário
+    function carregarGraficoAcertosErros() {
+      fetch(`/usuarios/desempenho-detalhado/${usuarioLogadoId}`)
+        .then(res => res.json())
+        .then(detalhes => {
+          const acertos = detalhes.filter(d => d.status_resposta == 'Acertou').length;
+          const erros = detalhes.length - acertos;
+          console.log('Detalhes recebidos:', detalhes);
+
+
+          new Chart(document.getElementById('graficoAcertosErros').getContext('2d'), {
+            type: 'pie',
+            data: {
+              labels: ['Acertos', 'Erros'],
+              datasets: [{
+                data: [acertos, erros],
+                backgroundColor: ['#4CAF50', '#F44336']
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }
+          });
+        })
+        .catch(err => console.error('Erro ao carregar desempenho:', err));
     }
 
-    // Atualiza total de usuários
-    document.getElementById('totalUsuarios').textContent = totalUsuarios;
+    // Função para carregar e exibir gráfico de desempenho geral dos usuários
+    function carregarGraficoDesempenhoGeral() {
+      fetch('/usuarios/desempenho-usuarios')
+        .then(res => res.json())
+        .then(desempenhoData => {
+          const nomes = [];
+          const percentuais = [];
+          let soma = 0;
 
-    // Cria gráfico de perfis
-    new Chart(document.getElementById('graficoPerfil'), {
-      type: 'pie',
-      data: {
-        labels: perfis,
-        datasets: [{
-          data: totais,
-          backgroundColor: [
-            '4FC3F7',
-            '#81C784',
-            '#BA68C8'
-          ]
-        }]
-      },
-      options: { responsive: true }
-    });
-  })
-  .catch(() => {
-    document.getElementById('totalUsuarios').textContent = 'Erro ao carregar';
-  });
+          for (let i = 0; i < desempenhoData.length; i++) {
+            nomes.push(desempenhoData[i].nome_completo);
+            const val = parseFloat(desempenhoData[i].media_percentual);
+            percentuais.push(val);
+            soma += val;
+          }
 
-// Buscar dados de desempenho
-fetch('/usuarios/desempenho-usuarios')
-  .then(res => res.json())
-  .then(desempenhoData => {
-    const nomes = [];
-    const percentuais = [];
-    let soma = 0;
+          if (desempenhoData.length > 0) {
+            const media = (soma / desempenhoData.length).toFixed(2) + '%';
+            document.getElementById('mediaGeralAcertos').textContent = media;
+          } else {
+            document.getElementById('mediaGeralAcertos').textContent = 'Sem dados';
+          }
 
-    for (let i = 0; i < desempenhoData.length; i++) {
-      nomes.push(desempenhoData[i].nome_completo);
-      const val = parseFloat(desempenhoData[i].media_percentual);
-      percentuais.push(val);
-      soma += val;
+          new Chart(document.getElementById('graficoDesempenho'), {
+            type: 'bar',
+            data: {
+              labels: nomes,
+              datasets: [{
+                label: 'Acertos (%)',
+                data: percentuais,
+                backgroundColor: '#42A5F5',
+                borderColor: '#1E88E5',
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              scales: { x: { beginAtZero: true, max: 100 } },
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              }
+            }
+          });
+        })
+        .catch(() => {
+          document.getElementById('mediaGeralAcertos').textContent = 'Erro ao carregar';
+        });
     }
 
-    // Atualiza média geral
-    if (desempenhoData.length > 0) {
-      const media = (soma / desempenhoData.length).toFixed(2) + '%';
-      document.getElementById('mediaGeralAcertos').textContent = media;
-    } else {
-      document.getElementById('mediaGeralAcertos').textContent = 'Sem dados';
+    // Função para carregar e exibir gráfico de distribuição dos perfis
+    function carregarGraficoDistribuicaoPerfis() {
+      fetch('/usuarios/perfil-distribuicao')
+        .then(res => res.json())
+        .then(perfilData => {
+          const perfis = [];
+          const totais = [];
+          let totalUsuarios = 0;
+
+          for (let i = 0; i < perfilData.length; i++) {
+            perfis.push(perfilData[i].perfil);
+            totais.push(perfilData[i].total);
+            totalUsuarios += perfilData[i].total;
+          }
+
+          document.getElementById('totalUsuarios').textContent = totalUsuarios;
+
+          new Chart(document.getElementById('graficoPerfil'), {
+            type: 'doughnut',
+            data: {
+              labels: perfis,
+              datasets: [{
+                data: totais,
+                backgroundColor: [
+                  '#4A90E2',
+                  '#73B3B8',
+                  '#A9CFF7'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }
+          });
+        })
+        .catch(() => {
+          document.getElementById('totalUsuarios').textContent = 'Erro ao carregar';
+        });
     }
 
-    // Cria gráfico de desempenho
-    new Chart(document.getElementById('graficoDesempenho'), {
-      type: 'bar',
-      data: {
-        labels: nomes,
-        datasets: [{
-          label: 'Acertos (%)',
-          data: percentuais,
-          backgroundColor: '#42A5F5',
-          bordercolor:'1E88E5',
-          
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        scales: { x: { beginAtZero: true, max: 100 } },
-        responsive: true
-      }
-    });
-  })
-  .catch(() => {
-    document.getElementById('mediaGeralAcertos').textContent = 'Erro ao carregar';
-  });
-
+    // Chama as funções para carregar os gráficos quando a página terminar de carregar
+    window.onload = () => {
+      carregarGraficoAcertosErros();
+      carregarGraficoDesempenhoGeral();
+      carregarGraficoDistribuicaoPerfis();
+    };
   </script>
 </body>
 </html>

@@ -25,6 +25,7 @@ function verificarEmailExistente(email) {
     `;
     return database.executar(instrucao, [email]);
 }
+
 function salvarRespostaQuiz(fkquiz_resultado_id, fkquiz_pergunta_id, resposta) {
   const queryBuscarCorreta = `SELECT correta FROM quiz_pergunta WHERE id = ?`;
 
@@ -38,22 +39,22 @@ function salvarRespostaQuiz(fkquiz_resultado_id, fkquiz_pergunta_id, resposta) {
       const respostaCorreta = (resposta === alternativaCorreta);
 
       const instrucaoSql = `
-        INSERT INTO quiz_resposta (fkquiz_resultado_id, fkquiz_pergunta_id, resposta, correta)
-        VALUES (?, ?, ?, ?);
+        INSERT INTO quiz_resposta (fkquiz_resultado_id, fkquiz_pergunta_id, resposta)
+        VALUES (?, ?, ?)
       `;
 
-      return database.executar(instrucaoSql, [fkquiz_resultado_id, fkquiz_pergunta_id, resposta, respostaCorreta]);
+      return database.executar(instrucaoSql, [fkquiz_resultado_id, fkquiz_pergunta_id, resposta]);
     });
 }
 
-function salvarResultadoQuiz(usuarioId, pontuacao, total_perguntas, percentual) {
-  var instrucaoSql = `
-    INSERT INTO quiz_resultado (fkusuario_id, pontuacao, total_perguntas, percentual)
+function salvarResultadoQuiz(fkusuario_id, acertos, totalPerguntas, percentual) {
+  const instrucaoSql = `
+    INSERT INTO quiz_resultado (fkusuario_id, acertos, total_perguntas, percentual)
     VALUES (?, ?, ?, ?);
   `;
-
-  return database.executar(instrucaoSql, [usuarioId, pontuacao, total_perguntas, percentual]);
+  return database.executar(instrucaoSql, [fkusuario_id, acertos, totalPerguntas, percentual]);
 }
+
 function pegarDistribuicaoPerfil() {
     const instrucaoSql = `
         SELECT perfil, COUNT(*) AS total
@@ -74,17 +75,21 @@ function pegarDesempenhoUsuarios() {
 
 function pegarRespostasDetalhadasPorUsuario(usuarioId) {
   const instrucaoSql = `
-    SELECT 
-      qr.id AS resultado_id,
-      qp.texto AS pergunta,
-      qrsp.resposta AS resposta_usuario,
-      qp.correta AS resposta_correta,
-      CASE WHEN qrsp.resposta = qp.correta THEN TRUE ELSE FALSE END AS acertou
-    FROM quiz_resultado qr
-    JOIN quiz_resposta qrsp ON qr.id = qrsp.fkquiz_resultado_id
-    JOIN quiz_pergunta qp ON qp.id = qrsp.fkquiz_pergunta_id
-    WHERE qr.fkusuario_id = ?
-    ORDER BY qr.data_resultado DESC, qp.id;
+    SELECT qp.texto,
+    CASE 
+        WHEN qr.resposta = qp.correta THEN 'Acertou'
+        ELSE 'Errou'
+    END AS status_resposta
+FROM quiz_resposta qr
+JOIN quiz_pergunta qp ON qr.fkquiz_pergunta_id = qp.id
+JOIN quiz_resultado qres ON qr.fkquiz_resultado_id = qres.id
+WHERE qres.fkusuario_id = ?
+  AND qres.id = (
+    SELECT MAX(id)
+    FROM quiz_resultado
+    WHERE fkusuario_id = ?
+  );
+
   `;
   return database.executar(instrucaoSql, [usuarioId]);
 }

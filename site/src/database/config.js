@@ -10,26 +10,38 @@ const mySqlConfig = {
 };
 
 function executar(instrucao, params = []) {
-    if (process.env.AMBIENTE_PROCESSO !== "producao" && process.env.AMBIENTE_PROCESSO !== "desenvolvimento") {
-        console.log("\nO AMBIENTE NÃO FOI DEFINIDO\n");
-        return Promise.reject("AMBIENTE NÃO CONFIGURADO");
-    }
-
     return new Promise((resolve, reject) => {
+        // Cria a conexão
         const conexao = mysql.createConnection(mySqlConfig);
-        conexao.connect();
 
-        conexao.query(instrucao, params, (erro, resultados) => {
-            conexao.end();
-            if (erro) {
-                reject(erro);
-            } else {
-                resolve(resultados);
+        // Conecta ao banco
+        conexao.connect((err) => {
+            if (err) {
+                console.error("Erro ao conectar ao banco:", err);
+                return reject(err);
             }
+
+            // Executa a query parametrizada
+            conexao.query(instrucao, params, (erro, resultados) => {
+                // Fecha a conexão assim que terminar
+                conexao.end();
+
+                if (erro) {
+                    console.error("Erro na query:", erro);
+                    return reject(erro);
+                }
+
+                // 'resultados' pode ser:
+                // - um array para SELECT
+                // - um objeto para INSERT/UPDATE/DELETE, contendo insertId, affectedRows etc.
+                resolve(resultados);
+            });
         });
 
-        conexao.on('error', erro => {
-            console.error("ERRO NO MySQL SERVER: ", erro.sqlMessage);
+        // Tratamento de erro na conexão
+        conexao.on('error', (erro) => {
+            console.error("Erro na conexão MySQL:", erro);
+            reject(erro);
         });
     });
 }
