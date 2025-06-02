@@ -13,10 +13,8 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
-
 router.get("/perfil-distribuicao", usuarioController.pegarDistribuicaoPerfil);
 router.get("/desempenho-usuarios", usuarioController.pegarDesempenhoUsuarios);
-router.get("/desempenho-detalhado/:id", usuarioController.pegarDesempenhoDetalhado);
-
-
+router.get("/ranking/top3", usuarioController.pegarRankingTop3);
+ 
 module.exports = router;

@@ -34,11 +34,6 @@
 
   <section class="graficos-dashboard">
     <div class="grafico-box">
-      <h3>Seu Desempenho no Quiz</h3>
-      <canvas id="graficoAcertosErros"></canvas>
-    </div>
-
-    <div class="grafico-box">
       <h3>Desempenho dos Usuários</h3>
       <canvas id="graficoDesempenho"></canvas>
     </div>
@@ -51,45 +46,13 @@
 </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
   
   <script>
   
   const usuarioLogadoId = Number(sessionStorage.getItem("ID_USUARIO"));
   
-
-function carregarGraficoAcertosErros() {
-  fetch(`/usuarios/desempenho-detalhado/${usuarioLogadoId}`)
-    .then(res => res.json())
-    .then(detalhes => {
-      if (!detalhes.length) {
-        console.log('Nenhum dado encontrado para o usuário.');
-        return;
-      }
-
-      const acertos = detalhes.filter(d => d.status_resposta == 'Acertou').length;
-      const erros = detalhes.length - acertos;
-
-      new Chart(document.getElementById('graficoAcertosErros').getContext('2d'), {
-        type: 'pie',
-        data: {
-          labels: ['Acertos', 'Erros'],
-          datasets: [{
-            data: [acertos, erros],
-            backgroundColor: ['#4CAF50', '#F44336']
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'bottom' }
-          }
-        }
-      });
-    })
-    .catch(err => console.error('Erro ao carregar desempenho:', err));
-}
-
     function carregarGraficoDesempenhoGeral() {
       fetch('/usuarios/desempenho-usuarios')
         .then(res => res.json())
@@ -186,7 +149,6 @@ function carregarGraficoAcertosErros() {
     }
 
     window.onload = () => {
-      carregarGraficoAcertosErros();
       carregarGraficoDesempenhoGeral();
       carregarGraficoDistribuicaoPerfis();
     };

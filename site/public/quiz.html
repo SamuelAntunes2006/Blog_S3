@@ -131,6 +131,7 @@ function mostrarResultado() {
   let texto;
 
   if (percentual >= 80) texto = `Parabéns! Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Excelente conhecimento!`;
+
   else if (percentual >= 50) texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Bom resultado, mas pode melhorar.`;
   else texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Recomendamos estudar mais.`;
 
@@ -141,10 +142,14 @@ function mostrarResultado() {
   const idUsuario = sessionStorage.getItem("ID_USUARIO");
   if (!idUsuario) return console.log("Usuário não identificado, não será possível salvar resultado.");
 
-  fetch("/api/salvar-respostas-quiz", {
+  fetch("/usuarios/salvar-respostas-quiz",  {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fkusuario_id: idUsuario, acertos, totalPerguntas: perguntas.length, percentual, respostas: respostasDados }),
+    body: JSON.stringify({ fkusuario_id: idUsuario,
+    acertos,
+    totalPerguntas: perguntas.length,
+    percentual,
+    respostas: respostasDados }),
   })
     .then(async (res) => {
       if (!res.ok) throw new Error(await res.text());

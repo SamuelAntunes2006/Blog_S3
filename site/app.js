@@ -1,7 +1,8 @@
 var ambiente_processo = 'producao';
-
 // var ambiente_processo = 'desenvolvimento';
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
+require('dotenv').config();
+
 
 require("dotenv").config({ path: caminho_env }); 
 
@@ -62,77 +63,6 @@ app.use("/usuarios", usuarioRouter);
 
 console.log("User:", process.env.DB_USER);
 console.log("Senha:", process.env.DB_PASSWORD);
-
-app.post('/api/salvar-respostas-quiz', async (req, res) => {
-  const { fkusuario_id, acertos, totalPerguntas, percentual, respostas } = req.body;
-
-  if (!fkusuario_id || acertos == null || totalPerguntas == null || percentual == null || !Array.isArray(respostas)) {
-    return res.status(400).json({ error: 'Dados incompletos ou respostas inválidas' });
-  }
-
-  try {
-    // Verificação se o usuário existe
-    const sqlVerificaUsuario = 'SELECT id FROM usuario WHERE id = ?';
-    const usuario = await executar(sqlVerificaUsuario, [fkusuario_id]);
-
-    if (usuario.length === 0) {
-      return res.status(400).json({ error: 'Usuário informado não existe.' });
-    }
-
-    const sqlResultado = `
-      INSERT INTO quiz_resultado (fkusuario_id, pontuacao, total_perguntas, percentual)
-      VALUES (?, ?, ?, ?);
-    `;
-    const resultadoInsert = await executar(sqlResultado, [fkusuario_id, acertos, totalPerguntas, percentual]);
-    const resultadoId = resultadoInsert.insertId;
-
-    const sqlResposta = `
-  INSERT INTO quiz_resposta (fkquiz_resultado_id, fkquiz_pergunta_id, resposta)
-  VALUES (?, ?, ?);
-`;
-
-for (const r of respostas) {
-  console.log('Valores para inserir:', resultadoId, r.fkpergunta_id, r.resposta);
-  await executar(sqlResposta, [resultadoId, r.fkpergunta_id, r.resposta]);
-}
-
-app.get('/usuarios/desempenho-detalhado/:id', async (req, res) => {
-  const usuarioId = Number(req.params.id);
-
-  if (!usuarioId) {
-    return res.status(400).json({ error: 'ID do usuário inválido' });
-  }
-
-  try {
-    const sql = `
-      SELECT qr.id as resultado_id, qr.pontuacao, qr.total_perguntas, qr.percentual,
-             r.fkquiz_pergunta_id, r.resposta
-      FROM quiz_resultado qr
-      JOIN quiz_resposta r ON qr.id = r.fkquiz_resultado_id
-      WHERE qr.fkusuario_id = ?
-    `;
-
-    const desempenhoDetalhado = await executar(sql, [usuarioId]);
-
-    res.json(desempenhoDetalhado);
-
-  } catch (error) {
-    console.error('Erro ao buscar desempenho detalhado:', error);
-    res.status(500).json({ error: 'Erro ao buscar desempenho detalhado' });
-  }
-});
-
-
-    res.status(201).json({ message: 'Resultado e respostas salvos com sucesso!', resultadoId });
-
-  } catch (err) {
-    console.error('Erro ao salvar resultado e respostas:', err);
-    res.status(500).json({ error: 'Erro ao salvar resultado e respostas' });
-  }
-});
-
-
-
 
 
 

@@ -26,35 +26,23 @@ function verificarEmailExistente(email) {
     return database.executar(instrucao, [email]);
 }
 
-function salvarRespostaQuiz(fkusuario_id, fkpergunta_id, resposta) {
-    const queryBuscarCorreta = `SELECT correta FROM quiz_pergunta WHERE id = ?`;
 
-    return database.executar(queryBuscarCorreta, [fkpergunta_id])
-        .then(resultado => {
-            if (resultado.length === 0) {
-                throw new Error("Pergunta não encontrada");
-            }
-
-            const alternativaCorreta = resultado[0].correta;
-            const respostaCorreta = (resposta == alternativaCorreta);
-
-            const instrucaoSql = `
-                INSERT INTO quiz_resposta (fkusuario_id, fkpergunta_id, resposta)
-                VALUES (?, ?, ?)
-            `;
-
-            return database.executar(instrucaoSql, [fkusuario_id, fkpergunta_id, resposta]);
-        });
-
-}
-
-function salvarResultadoQuiz(fkusuario_id, acertos, totalPerguntas, percentual) {
+function salvarResultadoQuiz(fkusuario_id, pontuacao, totalPerguntas, percentual) {
   const instrucaoSql = `
-    INSERT INTO quiz_resultado (fkusuario_id, acertos, total_perguntas, percentual)
+    INSERT INTO quiz_resultado (fkusuario_id, pontuacao, total_perguntas, percentual)
     VALUES (?, ?, ?, ?);
   `;
-  return database.executar(instrucaoSql, [fkusuario_id, acertos, totalPerguntas, percentual]);
+  return database.executar(instrucaoSql, [fkusuario_id, pontuacao, totalPerguntas, percentual]);
 }
+
+function salvarRespostaQuiz(fkusuario_id, fkpergunta_id, resposta) {
+  const instrucaoSql = `
+    INSERT INTO quiz_resposta (fkusuario_id, fkpergunta_id, resposta)
+    VALUES (?, ?, ?);
+  `;
+  return database.executar(instrucaoSql, [fkusuario_id, fkpergunta_id, resposta]);
+}
+
 
 function pegarDistribuicaoPerfil() {
     const instrucaoSql = `
@@ -74,25 +62,16 @@ function pegarDesempenhoUsuarios() {
     return database.executar(instrucaoSql);
 }
 
-function pegarRespostasDetalhadasPorUsuario(usuarioId) {
+function pegarRankingTop3() {
     const instrucaoSql = `
-    SELECT
-        CASE
-            WHEN qr.resposta = qp.correta THEN 'Acertou'
-            ELSE 'Errou'
-        END AS status_resposta
-    FROM quiz_resposta qr
-    JOIN quiz_pergunta qp ON qr.fkpergunta_id = qp.id
-    JOIN quiz_resultado qres ON qr.fkusuario_id = qres.fkusuario_id
-    WHERE qres.fkusuario_id = ?
-    AND qres.id = (
-        SELECT MAX(id)
-        FROM quiz_resultado
-        WHERE fkusuario_id = ?
-    )
-    AND qr.fkusuario_id = ?;
+        SELECT u.nome_completo, MAX(r.percentual) AS melhor_percentual
+        FROM quiz_resultado r
+        JOIN usuario u ON u.id = r.fkusuario_id
+        GROUP BY r.fkusuario_id, u.nome_completo
+        ORDER BY melhor_percentual DESC
+        LIMIT 3;
     `;
-    return database.executar(instrucaoSql, [usuarioId, usuarioId, usuarioId]);
+    return database.executar(instrucaoSql);
 }
 
 
@@ -103,6 +82,6 @@ module.exports = {
     salvarResultadoQuiz,
     pegarDistribuicaoPerfil,
     pegarDesempenhoUsuarios,
-    salvarRespostaQuiz,
-     pegarRespostasDetalhadasPorUsuario,
+    salvarRespostaQuiz, 
+    pegarRankingTop3
 };

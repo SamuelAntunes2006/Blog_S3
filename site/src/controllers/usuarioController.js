@@ -84,28 +84,26 @@ function salvarRespostasQuiz(req, res) {
   const respostas = req.body.respostas;
 
   usuarioModel.salvarResultadoQuiz(fkusuario_id, acertos, totalPerguntas, percentual)
-    .then(resultado => {
-      console.log("Resultado do quiz salvo, id:", resultado.insertId);
-      const quizResultadoId = resultado.insertId;
+  .then(({ insertId }) => {
+    console.log("Resultado do quiz salvo, id:", insertId);
 
-    const promessasRespostas = respostas.map(resposta => {
-    console.log(`Salvando resposta da pergunta ${resposta.fkpergunta_id} como ${resposta.resposta}`);
-    return usuarioModel.salvarRespostaQuiz(fkusuario_id, resposta.fkpergunta_id, resposta.resposta); 
+    const promessas = respostas.map(({ fkpergunta_id, resposta }) => {
+      console.log(`Salvando resposta da pergunta ${fkpergunta_id} como ${resposta}`);
+      return usuarioModel.salvarRespostaQuiz(fkusuario_id, fkpergunta_id, resposta);
+    });
+
+    return Promise.all(promessas);
+  })
+  .then(() => {
+    console.log("Todas as respostas salvas com sucesso.");
+    res.status(201).json({ message: "Respostas e resultado salvos com sucesso!" });
+  })
+  .catch(erro => {
+    console.error("Erro ao salvar respostas do quiz:", erro.sqlMessage || erro);
+    res.status(500).json({ error: erro.sqlMessage || erro });
   });
 
-  return Promise.all(promessasRespostas);
-})
-.then(() => {
-  console.log("Todas as respostas salvas com sucesso.");
-  res.status(201).json({ message: "Respostas e resultado salvos com sucesso!" });
-})
-.catch(erro => {
-  console.error("Erro ao salvar respostas do quiz:", erro.sqlMessage || erro);
-  res.status(500).json(erro.sqlMessage || erro);
-});
-    
 }
-
 // Função para pegar desempenho dos usuários
 function pegarDesempenhoUsuarios(req, res) {
   usuarioModel.pegarDesempenhoUsuarios()
@@ -118,15 +116,17 @@ function pegarDesempenhoUsuarios(req, res) {
     });
 }
 
-function pegarDesempenhoDetalhado(req, res) {
-  const usuarioId = req.params.id;
+function pegarRankingTop3(req, res) {
+    console.log("ACESSEI O USUARIO CONTROLLER - pegarRankingTop3");
 
-  usuarioModel.pegarRespostasDetalhadasPorUsuario(usuarioId)
-    .then(resultados => res.json(resultados))
-    .catch(err => {
-      console.error('Erro ao buscar desempenho detalhado:', err.sqlMessage || err);
-      res.status(500).json({ error: 'Erro ao buscar desempenho detalhado' });
-    });
+    usuarioModel.pegarRankingTop3()
+        .then(resultado => {
+            res.status(200).json(resultado);
+        })
+        .catch(erro => {
+            console.error(erro);
+            res.status(500).json({ erro: "Erro ao buscar o ranking." });
+        });
 }
 
 
@@ -137,5 +137,5 @@ module.exports = {
   salvarRespostasQuiz,
   pegarDistribuicaoPerfil,
   pegarDesempenhoUsuarios,
-  pegarDesempenhoDetalhado
+  pegarRankingTop3
 };
