@@ -83,30 +83,27 @@ function salvarRespostasQuiz(req, res) {
   const percentual = req.body.percentual;
   const respostas = req.body.respostas;
 
-  console.log("Salvando resultado quiz para usuário:", fkusuario_id);
-  console.log("Acertos:", acertos, "Total perguntas:", totalPerguntas, "Percentual:", percentual);
-  console.log("Respostas recebidas:", respostas);
-
   usuarioModel.salvarResultadoQuiz(fkusuario_id, acertos, totalPerguntas, percentual)
     .then(resultado => {
       console.log("Resultado do quiz salvo, id:", resultado.insertId);
       const quizResultadoId = resultado.insertId;
 
-      const promessasRespostas = respostas.map(resposta => {
-        console.log(`Salvando resposta da pergunta ${resposta.fkpergunta_id} como ${resposta.resposta}`);
-        return usuarioModel.salvarRespostaQuiz(quizResultadoId, resposta.fkpergunta_id, resposta.resposta);
-      });
+    const promessasRespostas = respostas.map(resposta => {
+    console.log(`Salvando resposta da pergunta ${resposta.fkpergunta_id} como ${resposta.resposta}`);
+    return usuarioModel.salvarRespostaQuiz(fkusuario_id, resposta.fkpergunta_id, resposta.resposta); 
+  });
 
-      return Promise.all(promessasRespostas);
-    })
-    .then(() => {
-      console.log("Todas as respostas salvas com sucesso.");
-      res.status(201).json({ message: "Respostas e resultado salvos com sucesso!" });
-    })
-    .catch(erro => {
-      console.error("Erro ao salvar respostas do quiz:", erro.sqlMessage || erro);
-      res.status(500).json(erro.sqlMessage || erro);
-    });
+  return Promise.all(promessasRespostas);
+})
+.then(() => {
+  console.log("Todas as respostas salvas com sucesso.");
+  res.status(201).json({ message: "Respostas e resultado salvos com sucesso!" });
+})
+.catch(erro => {
+  console.error("Erro ao salvar respostas do quiz:", erro.sqlMessage || erro);
+  res.status(500).json(erro.sqlMessage || erro);
+});
+    
 }
 
 // Função para pegar desempenho dos usuários
@@ -131,7 +128,6 @@ function pegarDesempenhoDetalhado(req, res) {
       res.status(500).json({ error: 'Erro ao buscar desempenho detalhado' });
     });
 }
-
 
 
 module.exports = {

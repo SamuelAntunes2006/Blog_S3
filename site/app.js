@@ -3,9 +3,9 @@ var ambiente_processo = 'producao';
 // var ambiente_processo = 'desenvolvimento';
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 
-require("dotenv").config({ path: caminho_env }); // <-- CARREGUE AQUI PRIMEIRO
+require("dotenv").config({ path: caminho_env }); 
 
-const { executar } = require("./src/database/config"); // <-- DEPOIS IMPORTE
+const { executar } = require("./src/database/config"); 
 
 
 var express = require("express");
@@ -16,8 +16,6 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 app.use(express.static('public'));
-
-
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 
@@ -35,7 +33,6 @@ app.get('/api/resultados', (req, res) => {
             res.status(500).send('Erro ao buscar resultados');
         });
 });
-
 
 
 app.get('/api/perguntas', (req, res) => {
@@ -99,6 +96,31 @@ for (const r of respostas) {
   await executar(sqlResposta, [resultadoId, r.fkpergunta_id, r.resposta]);
 }
 
+app.get('/usuarios/desempenho-detalhado/:id', async (req, res) => {
+  const usuarioId = Number(req.params.id);
+
+  if (!usuarioId) {
+    return res.status(400).json({ error: 'ID do usuário inválido' });
+  }
+
+  try {
+    const sql = `
+      SELECT qr.id as resultado_id, qr.pontuacao, qr.total_perguntas, qr.percentual,
+             r.fkquiz_pergunta_id, r.resposta
+      FROM quiz_resultado qr
+      JOIN quiz_resposta r ON qr.id = r.fkquiz_resultado_id
+      WHERE qr.fkusuario_id = ?
+    `;
+
+    const desempenhoDetalhado = await executar(sql, [usuarioId]);
+
+    res.json(desempenhoDetalhado);
+
+  } catch (error) {
+    console.error('Erro ao buscar desempenho detalhado:', error);
+    res.status(500).json({ error: 'Erro ao buscar desempenho detalhado' });
+  }
+});
 
 
     res.status(201).json({ message: 'Resultado e respostas salvos com sucesso!', resultadoId });

@@ -14,7 +14,6 @@ router.post("/autenticar", function (req, res) {
 });
 
 
-// Rotas para os gráficos
 router.get("/perfil-distribuicao", usuarioController.pegarDistribuicaoPerfil);
 router.get("/desempenho-usuarios", usuarioController.pegarDesempenhoUsuarios);
 router.get("/desempenho-detalhado/:id", usuarioController.pegarDesempenhoDetalhado);

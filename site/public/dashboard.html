@@ -49,47 +49,47 @@
     </div>
   </section>
 </main>
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <script>
-    // ID do usuário logado, você pode ajustar conforme sua lógica de autenticação
-    const usuarioLogadoId = 1;
+  
+  const usuarioLogadoId = Number(sessionStorage.getItem("ID_USUARIO"));
+  
 
-    // Função para carregar e exibir o gráfico de acertos e erros do usuário
-    function carregarGraficoAcertosErros() {
-      fetch(`/usuarios/desempenho-detalhado/${usuarioLogadoId}`)
-        .then(res => res.json())
-        .then(detalhes => {
-          const acertos = detalhes.filter(d => d.status_resposta == 'Acertou').length;
-          const erros = detalhes.length - acertos;
-          console.log('Detalhes recebidos:', detalhes);
+function carregarGraficoAcertosErros() {
+  fetch(`/usuarios/desempenho-detalhado/${usuarioLogadoId}`)
+    .then(res => res.json())
+    .then(detalhes => {
+      if (!detalhes.length) {
+        console.log('Nenhum dado encontrado para o usuário.');
+        return;
+      }
 
+      const acertos = detalhes.filter(d => d.status_resposta == 'Acertou').length;
+      const erros = detalhes.length - acertos;
 
-          new Chart(document.getElementById('graficoAcertosErros').getContext('2d'), {
-            type: 'pie',
-            data: {
-              labels: ['Acertos', 'Erros'],
-              datasets: [{
-                data: [acertos, erros],
-                backgroundColor: ['#4CAF50', '#F44336']
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'bottom'
-                }
-              }
-            }
-          });
-        })
-        .catch(err => console.error('Erro ao carregar desempenho:', err));
-    }
+      new Chart(document.getElementById('graficoAcertosErros').getContext('2d'), {
+        type: 'pie',
+        data: {
+          labels: ['Acertos', 'Erros'],
+          datasets: [{
+            data: [acertos, erros],
+            backgroundColor: ['#4CAF50', '#F44336']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    })
+    .catch(err => console.error('Erro ao carregar desempenho:', err));
+}
 
-    // Função para carregar e exibir gráfico de desempenho geral dos usuários
     function carregarGraficoDesempenhoGeral() {
       fetch('/usuarios/desempenho-usuarios')
         .then(res => res.json())
@@ -140,7 +140,7 @@
         });
     }
 
-    // Função para carregar e exibir gráfico de distribuição dos perfis
+ 
     function carregarGraficoDistribuicaoPerfis() {
       fetch('/usuarios/perfil-distribuicao')
         .then(res => res.json())
@@ -185,7 +185,6 @@
         });
     }
 
-    // Chama as funções para carregar os gráficos quando a página terminar de carregar
     window.onload = () => {
       carregarGraficoAcertosErros();
       carregarGraficoDesempenhoGeral();

@@ -45,167 +45,124 @@
     <p>&copy; 2025 [S]³ Investimentos | Todos os direitos reservados</p>
     <p><a href="mailto:samuel.asantos@sptech.school">samuel.asantos@sptech.school</a></p>
   </footer>
+<script>
+  const perguntas = [
+  {
+    id: 1,
+    pergunta: "O que é investir?",
+    respostas: [
+      { texto: "Gastar dinheiro sem preocupação de retorno", correta: false },
+      { texto: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo", correta: true },
+      { texto: "Guardar dinheiro sem gerar retorno", correta: false },
+    ],
+  },
+  {
+    id: 2,
+    pergunta: "O que é Tesouro Direto?",
+    respostas: [
+      { texto: "Um investimento em imóveis", correta: false },
+      { texto: "Um título do governo", correta: true },
+      { texto: "Uma ação de empresa privada", correta: false },
+    ],
+  },
+  {
+    id: 3,
+    pergunta: "O que é CDB?",
+    respostas: [
+      { texto: "Um título do governo", correta: false },
+      { texto: "Um investimento em ações", correta: false },
+      { texto: "Um título bancário", correta: true },
+    ],
+  },
+  {
+    id: 4,
+    pergunta: "O que significa 'rentabilidade' em investimentos?",
+    respostas: [
+      { texto: "Previsibilidade de retorno", correta: false },
+      { texto: "Rendimento fixo com baixo risco", correta: false },
+      { texto: "Ganhos ou perdas dependem do desempenho do mercado", correta: true },
+    ],
+  },
+  {
+    id: 5,
+    pergunta: "Como o blog sugere que o investidor escolha o melhor investimento?",
+    respostas: [
+      { texto: "De acordo com suas metas e tolerância ao risco", correta: true },
+      { texto: "Somente considerando o retorno financeiro", correta: false },
+      { texto: "De acordo com o tanto de dinheiro que você tem", correta: false },
+    ],
+  },
+];
 
-  <script>
-    const perguntas = [
-      {
-        id: 1,
-        pergunta: "O que é investir?",
-        respostas: [
-          { texto: "Gastar dinheiro sem preocupação de retorno", correta: false },
-          { texto: "Aplicar dinheiro com o objetivo de obter lucro no curto, médio ou longo prazo", correta: true },
-          { texto: "Guardar dinheiro sem gerar retorno", correta: false },
-        ],
-      },
-      {
-        id: 2,
-        pergunta: "O que é Tesouro Direto?",
-        respostas: [
-          { texto: "Um investimento em imóveis", correta: false },
-          { texto: "Um título do governo", correta: true },
-          { texto: "Uma ação de empresa privada", correta: false },
-        ],
-      },
-      {
-        id: 3,
-        pergunta: "O que é CDB?",
-        respostas: [
-          { texto: "Um título do governo", correta: false },
-          { texto: "Um investimento em ações", correta: false },
-          { texto: "Um título bancário", correta: true },
-        ],
-      },
-      {
-        id: 4,
-        pergunta: "O que significa 'rentabilidade' em investimentos?",
-        respostas: [
-          { texto: "Previsibilidade de retorno", correta: false },
-          { texto: "Rendimento fixo com baixo risco", correta: false },
-          { texto: "Ganhos ou perdas dependem do desempenho do mercado", correta: true },
-        ],
-      },
-      {
-        id: 5,
-        pergunta: "Como o blog sugere que o investidor escolha o melhor investimento?",
-        respostas: [
-          { texto: "De acordo com suas metas e tolerância ao risco", correta: true },
-          { texto: "Somente considerando o retorno financeiro", correta: false },
-          { texto: "De acordo com o tanto de dinheiro que você tem", correta: false },
-        ],
-      },
-    ];
+let indiceAtual = 0;
+let acertos = 0;
+let respostasDados = [];
 
-    let indiceAtual = 0;
-    let acertos = 0;
-    let respostasDados = [];
+const contadorEl = document.querySelector(".contador");
+const perguntaEl = document.querySelector(".pergunta");
+const respostasEl = document.querySelector(".respostas");
+const finalizarEl = document.querySelector(".finalizar");
+const mensagemEl = document.querySelector(".mensagem");
+const conteudoEl = document.querySelector(".content");
 
-    const contadorEl = document.querySelector(".contador");
-    const perguntaEl = document.querySelector(".pergunta");
-    const respostasEl = document.querySelector(".respostas");
-    const finalizarEl = document.querySelector(".finalizar");
-    const mensagemEl = document.querySelector(".mensagem");
-    const btnReiniciar = finalizarEl.querySelector("button");
-    const conteudoEl = document.querySelector(".content");
-
-    function mostrarPergunta() {
+function mostrarPergunta() {
   const atual = perguntas[indiceAtual];
-
   contadorEl.textContent = `${indiceAtual + 1} / ${perguntas.length}`;
   perguntaEl.textContent = atual.pergunta;
-
   respostasEl.innerHTML = "";
 
-  const letras = ['a', 'b', 'c'];
-
-  atual.respostas.forEach((resposta, index) => {
+  atual.respostas.forEach((resposta, i) => {
     const btn = document.createElement("button");
-    btn.textContent = `${letras[index]}) ${resposta.texto}`;
-    btn.onclick = () => escolherResposta(letras[index], resposta.correta, atual.id);
+    btn.textContent = `${String.fromCharCode(97 + i)}) ${resposta.texto}`;
+    btn.onclick = () => escolherResposta(String.fromCharCode(97 + i), resposta.correta, atual.id);
     respostasEl.appendChild(btn);
   });
 }
 
 function escolherResposta(letra, correta, idPergunta) {
-  respostasDados.push({
-    fkpergunta_id: idPergunta,
-    resposta: letra,
-    correta: correta ? 1 : 0,
-  });
-
+  respostasDados.push({ fkpergunta_id: idPergunta, resposta: letra, correta: correta ? 1 : 0 });
   if (correta) acertos++;
-
   indiceAtual++;
-  if (indiceAtual < perguntas.length) {
-    mostrarPergunta();
-  } else {
-    mostrarResultado();
-  }
+  indiceAtual < perguntas.length ? mostrarPergunta() : mostrarResultado();
 }
-  
-    function mostrarResultado() {
-      const percentual = Math.round((acertos / perguntas.length) * 100);
-      let texto = "";
 
-      if (percentual >= 80) {
-        texto = `Parabéns! Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Excelente conhecimento!`;
-      } else if (percentual >= 50) {
-        texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Bom resultado, mas pode melhorar.`;
-      } else {
-        texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Recomendamos estudar mais.`;
-      }
+function mostrarResultado() {
+  const percentual = Math.round((acertos / perguntas.length) * 100);
+  let texto;
 
-      mensagemEl.textContent = texto;
-      conteudoEl.style.display = "none";
-      finalizarEl.style.display = "block";
+  if (percentual >= 80) texto = `Parabéns! Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Excelente conhecimento!`;
+  else if (percentual >= 50) texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Bom resultado, mas pode melhorar.`;
+  else texto = `Você acertou ${acertos} de ${perguntas.length} (${percentual}%). Recomendamos estudar mais.`;
 
-      const idUsuario = sessionStorage.getItem("ID_USUARIO");
-      if (!idUsuario) {
-        console.log("Usuário não identificado, não será possível salvar resultado.");
-        return;
-      }
-            console.log("Enviando respostas para backend:", {
-            fkusuario_id: idUsuario,
-            acertos,
-            totalPerguntas: perguntas.length,
-            percentual,
-            respostas: respostasDados,
-              });
+  mensagemEl.textContent = texto;
+  conteudoEl.style.display = "none";
+  finalizarEl.style.display = "block";
 
-      fetch("/api/salvar-respostas-quiz", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    fkusuario_id: idUsuario,
-    acertos,
-    totalPerguntas: perguntas.length,
-    percentual,
-    respostas: respostasDados,
-  }),
-})
-  .then(async (res) => {
-    if (!res.ok) {
-      const texto = await res.text();
-      console.error("Resposta de erro do servidor:", texto);
-      throw new Error(texto);
-    }
-    return res.json();
+  const idUsuario = sessionStorage.getItem("ID_USUARIO");
+  if (!idUsuario) return console.log("Usuário não identificado, não será possível salvar resultado.");
+
+  fetch("/api/salvar-respostas-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fkusuario_id: idUsuario, acertos, totalPerguntas: perguntas.length, percentual, respostas: respostasDados }),
   })
-  .then((data) => console.log("Resultado enviado com sucesso:", data))
-  .catch((erro) => console.error("Erro ao enviar resultado:", erro));
+    .then(async (res) => {
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    })
+    .then((data) => console.log("Resultado enviado com sucesso:", data))
+    .catch((erro) => console.error("Erro ao enviar resultado:", erro));
+}
 
+function Reiniciar() {
+  indiceAtual = 0;
+  acertos = 0;
+  respostasDados = [];
+  conteudoEl.style.display = "block";
+  finalizarEl.style.display = "none";
+  mostrarPergunta();
+}
 
-    }
-    function Reiniciar(){
-  
-      indiceAtual = 0;
-      acertos = 0;
-      respostasDados = [];
-      conteudoEl.style.display = "block";
-      finalizarEl.style.display = "none";
-      mostrarPergunta();
-    };
-  
-    mostrarPergunta();
-  </script>
-</body>
+mostrarPergunta();
+</script>
 </html>

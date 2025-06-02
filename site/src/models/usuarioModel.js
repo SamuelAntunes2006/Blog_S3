@@ -26,25 +26,26 @@ function verificarEmailExistente(email) {
     return database.executar(instrucao, [email]);
 }
 
-function salvarRespostaQuiz(fkquiz_resultado_id, fkquiz_pergunta_id, resposta) {
-  const queryBuscarCorreta = `SELECT correta FROM quiz_pergunta WHERE id = ?`;
+function salvarRespostaQuiz(fkusuario_id, fkpergunta_id, resposta) {
+    const queryBuscarCorreta = `SELECT correta FROM quiz_pergunta WHERE id = ?`;
 
-  return database.executar(queryBuscarCorreta, [fkquiz_pergunta_id])
-    .then(resultado => {
-      if (resultado.length === 0) {
-        throw new Error("Pergunta não encontrada");
-      }
+    return database.executar(queryBuscarCorreta, [fkpergunta_id])
+        .then(resultado => {
+            if (resultado.length === 0) {
+                throw new Error("Pergunta não encontrada");
+            }
 
-      const alternativaCorreta = resultado[0].correta;
-      const respostaCorreta = (resposta === alternativaCorreta);
+            const alternativaCorreta = resultado[0].correta;
+            const respostaCorreta = (resposta == alternativaCorreta);
 
-      const instrucaoSql = `
-        INSERT INTO quiz_resposta (fkquiz_resultado_id, fkquiz_pergunta_id, resposta)
-        VALUES (?, ?, ?)
-      `;
+            const instrucaoSql = `
+                INSERT INTO quiz_resposta (fkusuario_id, fkpergunta_id, resposta)
+                VALUES (?, ?, ?)
+            `;
 
-      return database.executar(instrucaoSql, [fkquiz_resultado_id, fkquiz_pergunta_id, resposta]);
-    });
+            return database.executar(instrucaoSql, [fkusuario_id, fkpergunta_id, resposta]);
+        });
+
 }
 
 function salvarResultadoQuiz(fkusuario_id, acertos, totalPerguntas, percentual) {
@@ -74,24 +75,24 @@ function pegarDesempenhoUsuarios() {
 }
 
 function pegarRespostasDetalhadasPorUsuario(usuarioId) {
-  const instrucaoSql = `
-    SELECT qp.texto,
-    CASE 
-        WHEN qr.resposta = qp.correta THEN 'Acertou'
-        ELSE 'Errou'
-    END AS status_resposta
-FROM quiz_resposta qr
-JOIN quiz_pergunta qp ON qr.fkquiz_pergunta_id = qp.id
-JOIN quiz_resultado qres ON qr.fkquiz_resultado_id = qres.id
-WHERE qres.fkusuario_id = ?
-  AND qres.id = (
-    SELECT MAX(id)
-    FROM quiz_resultado
-    WHERE fkusuario_id = ?
-  );
-
-  `;
-  return database.executar(instrucaoSql, [usuarioId]);
+    const instrucaoSql = `
+    SELECT
+        CASE
+            WHEN qr.resposta = qp.correta THEN 'Acertou'
+            ELSE 'Errou'
+        END AS status_resposta
+    FROM quiz_resposta qr
+    JOIN quiz_pergunta qp ON qr.fkpergunta_id = qp.id
+    JOIN quiz_resultado qres ON qr.fkusuario_id = qres.fkusuario_id
+    WHERE qres.fkusuario_id = ?
+    AND qres.id = (
+        SELECT MAX(id)
+        FROM quiz_resultado
+        WHERE fkusuario_id = ?
+    )
+    AND qr.fkusuario_id = ?;
+    `;
+    return database.executar(instrucaoSql, [usuarioId, usuarioId, usuarioId]);
 }
 
 
