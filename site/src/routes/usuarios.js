@@ -15,6 +15,7 @@ router.post("/autenticar", function (req, res) {
 
 router.get("/perfil-distribuicao", usuarioController.pegarDistribuicaoPerfil);
 router.get("/desempenho-usuarios", usuarioController.pegarDesempenhoUsuarios);
-router.get("/ranking/top3", usuarioController.pegarRankingTop3);
+router.get("/ranking-top3", usuarioController.pegarRankingTop3);
+
  
 module.exports = router;

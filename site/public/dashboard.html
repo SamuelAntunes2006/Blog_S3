@@ -26,13 +26,18 @@
   </header>
 
   <main class="layout-dashboard">
+
   <section class="resumo-dashboard">
     <h3>Resumo Geral</h3>
     <p><strong>Total de Usuários:</strong> <span id="totalUsuarios">Carregando...</span></p>
     <p><strong>Média Geral de Acertos (%):</strong> <span id="mediaGeralAcertos">Carregando...</span></p>
   </section>
 
-  <section class="graficos-dashboard">
+    <div class="grafico-box">
+  <h3>Top 3 Usuários - Ranking</h3>
+  <ul id="listaRanking"></ul>
+  </div>
+  
     <div class="grafico-box">
       <h3>Desempenho dos Usuários</h3>
       <canvas id="graficoDesempenho"></canvas>
@@ -42,17 +47,39 @@
       <h3>Distribuição dos Perfis</h3>
       <canvas id="graficoPerfil"></canvas>
     </div>
+
   </section>
 </main>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-  
   <script>
   
   const usuarioLogadoId = Number(sessionStorage.getItem("ID_USUARIO"));
+
   
+  function carregarRankingTop3() {
+  fetch('/usuarios/ranking-top3')
+    .then(res => res.json())
+    .then(rankingData => {
+      const lista = document.getElementById('listaRanking');
+      lista.innerHTML = ''; 
+
+      if (rankingData.length > 0) {
+        rankingData.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.textContent = `${index + 1}º - ${item.nome_completo} (${item.percentual_max.toFixed(2)}%)`;
+          lista.appendChild(li);
+        });
+      } else {
+        lista.innerHTML = '<li>Sem dados de ranking</li>';
+      }
+    })
+    .catch(() => {
+      const lista = document.getElementById('listaRanking');
+      lista.innerHTML = '<li>Erro ao carregar ranking</li>';
+    });
+}
+
     function carregarGraficoDesempenhoGeral() {
       fetch('/usuarios/desempenho-usuarios')
         .then(res => res.json())
@@ -151,6 +178,7 @@
     window.onload = () => {
       carregarGraficoDesempenhoGeral();
       carregarGraficoDistribuicaoPerfis();
+       carregarRankingTop3();  
     };
   </script>
 </body>

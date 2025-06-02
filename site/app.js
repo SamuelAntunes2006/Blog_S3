@@ -18,40 +18,14 @@ var HOST_APP = process.env.APP_HOST;
 var app = express();
 app.use(express.static('public'));
 var indexRouter = require("./src/routes/index");
+
 var usuarioRouter = require("./src/routes/usuarios");
-
-app.get('/api/resultados', (req, res) => {
-    const sql = `
-        SELECT u.nome_completo, u.perfil, r.pontuacao, r.percentual
-        FROM quiz_resultado r
-        JOIN usuario u ON u.id = r.fkusuario_id
-    `;
-
-    executar(sql)
-        .then(resultados => res.json(resultados))
-        .catch(err => {
-            console.error('Erro ao buscar resultados:', err);
-            res.status(500).send('Erro ao buscar resultados');
-        });
-});
-
-
-app.get('/api/perguntas', (req, res) => {
-    const sql = `SELECT * FROM quiz_pergunta`;
-
-    executar(sql)
-        .then(perguntas => res.json(perguntas))
-        .catch(err => {
-            console.error('Erro ao buscar perguntas:', err);
-            res.status(500).send('Erro ao buscar perguntas');
-        });
-});
+const perguntasRouter = require('./src/routes/perguntas');
+app.use('/', perguntasRouter);
 
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());

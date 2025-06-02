@@ -117,16 +117,16 @@ function pegarDesempenhoUsuarios(req, res) {
 }
 
 function pegarRankingTop3(req, res) {
-    console.log("ACESSEI O USUARIO CONTROLLER - pegarRankingTop3");
-
-    usuarioModel.pegarRankingTop3()
-        .then(resultado => {
-            res.status(200).json(resultado);
-        })
-        .catch(erro => {
-            console.error(erro);
-            res.status(500).json({ erro: "Erro ao buscar o ranking." });
-        });
+  console.log("ACESSEI pegarRankingTop3");
+  usuarioModel.pegarRankingTop3()
+    .then(resultado => {
+      console.log("Resultado do ranking:", resultado); // <=== veja aqui o que tem
+      res.status(200).json(resultado);
+    })
+    .catch(erro => {
+      console.error("Erro pegarRankingTop3:", erro);
+      res.status(500).json({ erro: "Erro ao buscar o ranking." });
+    });
 }
 
 
