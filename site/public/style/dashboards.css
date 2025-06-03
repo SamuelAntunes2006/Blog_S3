@@ -19,7 +19,7 @@ body {
 /* Cabeçalho com imagem e sombra */
 .header2 {
   background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                    url('https://img.freepik.com/fotos-gratis/grafico-de-crescimento-negocios_53876-97406.jpg');
+                    url('/public/assets/Design\ sem\ nome\ .jpg');
   background-size: cover;
   background-position: center;
   color: white;
