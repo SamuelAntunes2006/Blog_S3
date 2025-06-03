@@ -120,7 +120,6 @@ function pegarRankingTop3(req, res) {
   console.log("ACESSEI pegarRankingTop3");
   usuarioModel.pegarRankingTop3()
     .then(resultado => {
-      console.log("Resultado do ranking:", resultado); // <=== veja aqui o que tem
       res.status(200).json(resultado);
     })
     .catch(erro => {

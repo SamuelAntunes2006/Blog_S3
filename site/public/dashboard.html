@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="dashboards.css" />
-  <link rel="stylesheet" href="quiz.css" />
+  <link rel="stylesheet" href="/public/style/dashboards.css" />
+  <link rel="stylesheet" href="/public/style/quiz.css" />
   <title>Quiz de Investimentos - Dashboard</title>
 </head>
 <body>
@@ -36,8 +36,9 @@
     <div class="grafico-box">
   <h3>Top 3 Usuários - Ranking</h3>
   <ul id="listaRanking"></ul>
+
   </div>
-  
+
     <div class="grafico-box">
       <h3>Desempenho dos Usuários</h3>
       <canvas id="graficoDesempenho"></canvas>
@@ -58,16 +59,17 @@
 
   
   function carregarRankingTop3() {
-  fetch('/usuarios/ranking-top3')
+  fetch('http://localhost:8080/usuarios/ranking-top3')
+
     .then(res => res.json())
     .then(rankingData => {
       const lista = document.getElementById('listaRanking');
-      lista.innerHTML = ''; 
+      lista.innerHTML = '';
 
       if (rankingData.length > 0) {
         rankingData.forEach((item, index) => {
           const li = document.createElement('li');
-          li.textContent = `${index + 1}º - ${item.nome_completo} (${item.percentual_max.toFixed(2)}%)`;
+          li.textContent = `${index + 1}º - ${item.nome_completo} (${item.melhor_percentual}%)`;
           lista.appendChild(li);
         });
       } else {
@@ -81,7 +83,7 @@
 }
 
     function carregarGraficoDesempenhoGeral() {
-      fetch('/usuarios/desempenho-usuarios')
+      fetch('http://localhost:8080/usuarios/desempenho-usuarios')
         .then(res => res.json())
         .then(desempenhoData => {
           const nomes = [];
@@ -132,7 +134,8 @@
 
  
     function carregarGraficoDistribuicaoPerfis() {
-      fetch('/usuarios/perfil-distribuicao')
+     fetch('http://localhost:8080/usuarios/perfil-distribuicao')
+
         .then(res => res.json())
         .then(perfilData => {
           const perfis = [];

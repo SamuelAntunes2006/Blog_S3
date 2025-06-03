@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz de Investimentos</title>
-  <link rel="stylesheet" href="quiz.css" />
+  <link rel="stylesheet" href="/public/style/quiz.css" />
 </head>
 <body>
   <header class="header2">
@@ -142,7 +142,8 @@ function mostrarResultado() {
   const idUsuario = sessionStorage.getItem("ID_USUARIO");
   if (!idUsuario) return console.log("Usuário não identificado, não será possível salvar resultado.");
 
-  fetch("/usuarios/salvar-respostas-quiz",  {
+fetch("http://localhost:8080/usuarios/salvar-respostas-quiz", 
+  {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ fkusuario_id: idUsuario,
